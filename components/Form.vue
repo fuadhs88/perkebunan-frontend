@@ -1,5 +1,5 @@
 <template>
-    <v-form ref="form" v-model="valid">
+    <v-form ref="form">
         <div 
             v-for="(item, index) in fields.filter((item)=>item.form!=false)"
             :key="index">

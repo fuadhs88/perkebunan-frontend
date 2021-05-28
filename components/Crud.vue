@@ -4,7 +4,8 @@
 		<Head 
 			:title="crud.title" 
 			:subtitle="crud.subtitle"
-			:handleDelete="dipilih.length>0 && handleKonfirmasiHapus">
+			:handleDelete="dipilih.length>0 && handleKonfirmasiHapus"
+            :color="color">
             <v-btn small
                 v-on:click="handleOpenFormTambah">
                 <v-icon left>mdi-plus-circle</v-icon>
@@ -16,11 +17,59 @@
 			dense
 			v-model="dipilih"
 			:headers="crud.headers"
+            :hide-default-header="crud.nested"
 			:items="crud.data||data"
 			item-key="name"
 			show-select
 			class="elevation-1"
 			height="65vh">
+            
+            <template
+                v-if="crud.nested"
+                v-slot:header="{ props: {headers} }">
+                <thead>
+                <template v-for="item in [processTableHeaders(headers)]">
+                    <tr :key="item.value">
+                        <th v-for="header in item.parents"
+                            :key="header.value"
+                            :rowspan="header.rowspan"
+                            :colspan="header.colspan"
+                            :width="header.width"
+                            :class="header.align ? `text-${header.align}` : ''"
+                            style="border: thin solid rgba(0, 0, 0, 0.12)">
+                            {{ header.text }}
+                        </th>
+                    </tr>
+                    <tr v-if="item.children"
+                        :key="item.value">
+                        <th v-for="header in item.children"
+                            :key="header.value"
+                            :width="header.width"
+                            :class="header.align ? `text-xs-${header.align}` : ''"
+                            style="border: thin solid rgba(0, 0, 0, 0.12)">
+                            {{ header.text }}
+                        </th>
+                    </tr>
+                </template>
+                </thead>
+            </template>
+            <template 
+                v-if="crud.nested"
+                v-slot:body="{items}">
+                <template v-for="v in crud.headers">
+                    <td v-if="!v.children"
+                        :key="v.value"
+                        :class="`text-xs-${v.align}`">
+                        {{ v.format ? v.format(items[v.value]) : items[v.value] }}
+                    </td>
+                    <td v-else
+                        v-for="c in v.children"
+                        :key="c.value"
+                        :class="`text-xs-${c.align}`">
+                        {{ v.format ? v.format(items[v.value]) : items[v.value] }}
+                    </td>
+                </template>
+            </template>
 			<template v-slot:[`item.status`]="{item}">
 				<v-switch v-model="item.status" readonly class="mt-0" style="height:-webkit-fill-available"/>
 			</template>
@@ -115,7 +164,7 @@
 </template>
 <script>
 export default {
-    props: ["crud"],
+    props: ["crud", "color"],
 	data: () => ({
         valid:false,
 		dipilih: [],
@@ -139,6 +188,40 @@ export default {
         handleOpenFormEdit(){
             this.dialogTitle    = "Edit"
             this.dialogForm     = true
+        },
+        processTableHeaders(headers) {
+            
+            const nested = !!headers.some(h => h.children)
+            if (nested) {
+                let children = []
+
+                const h = headers.map(h => {
+                    if (h.children && h.children.length > 0) {
+                        children.push(...h.children)
+
+                        return {
+                            rowspan: 1,
+                            colspan: h.children.length,
+                            text: h.text,
+                            align: h.align
+                        }
+                    }
+                    return {
+                        rowspan: 2,
+                        colspan: 1,
+                        text: h.text,
+                        align: h.align
+                    }
+                })
+
+                return {
+                    children: children,
+                    parents: h
+                }
+            }
+            return {
+                parents: headers
+            }
         }
 	}
 }

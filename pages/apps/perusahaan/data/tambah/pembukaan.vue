@@ -10,7 +10,7 @@ export default {
     data: () => ({
         crud:{
 			title: "Lahan",
-			subtitle: "Kelola data lahan pembibitan",
+			subtitle: "Kelola data Rencana Dan Realisasi Pembukaan Lahan",
 			headers: [
                     {
                         text: 'No',
@@ -18,31 +18,28 @@ export default {
                         form: false
                     }, 
                     {
-                        text: 'Kegiatan',
-                        value: 'proses',
-                        info: ['Contoh : BENIH, SP2B, Realisasi Benih, Pre Nursery'],
+                        text: 'Tahun LC',
+                        value: 'tahun',
+                        info: ['masukkan tahun, Contoh : 2020, 2021']
                     }, 
                     {
-                        text: 'Luas (HA)',
-                        value: 'proses',
+                        text: 'Rencana HA',
+                        value: 'rencana',
                         info: ['Contoh : satuan dalam HA'],
                     }, 
                     {
-                        text: 'Jumlah Bibit (Btg)',
-                        value: 'proses',
-                        info: ['Contoh : satuan dalam Btg'],
-                        
+                        text: 'Realisasi Inti',
+                        value: 'realisasi_inti',
+                        info: ['Contoh : satuan dalam HA'],
                     }, 
                     {
-                        text: 'Umur (Bln)',
-                        value: 'proses',
-                        info: ['Contoh : satuan dalam Bln'],
-                        
+                        text: 'Realisasi Plasma',
+                        value: 'realisasi_plasma',
+                        info: ['Contoh : satuan dalam HA'],
                     }, 
                     {
                         text: 'Keterangan',
                         value: 'proses',
-                        
                     }, 
                 ],
             data:[]

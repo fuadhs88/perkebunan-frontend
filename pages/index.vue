@@ -3,7 +3,7 @@
 		<v-card elevation="2">
 			<v-img
 				height="300"
-				src="http://localhost:3000/bg.jpg"
+				src="/bg.jpg"
 				>
 				
 				<v-img class="mx-8 my-8" width="80" src="https://upload.wikimedia.org/wikipedia/commons/3/37/Coat_of_Arms_of_Regency_Kutai_Timur.png"/>

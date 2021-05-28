@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-6 text-h6 white--text d-flex justify-space-between">
+    <div :class="`mt-6 text-h6 d-flex justify-space-between ${color||`white--text`}`">
         <div>
             <p class="text-h4 mb-0">{{ title }}</p>
             <p class="subtitle-2">{{ subtitle }}</p>
@@ -24,6 +24,6 @@
 </template>
 <script>
 export default {
-    props: ['title', 'subtitle', 'add', 'back', 'handleDelete']
+    props: ['title', 'subtitle', 'add', 'back', 'handleDelete', 'color']
 }
 </script>

@@ -17,10 +17,6 @@ export default {
                 nama: "Data Perusahaan",
                 link: "/apps/perusahaan/data",
             },
-            {
-                nama: "Laporan",
-                link: "/apps/ppdb/kelompok",
-            }
         ]
     }),
 	methods:{

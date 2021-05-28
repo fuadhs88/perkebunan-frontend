@@ -36,7 +36,7 @@
 				<v-switch v-model="item.status" readonly class="mt-0" style="height:-webkit-fill-available"/>
 			</template>
 			<template v-slot:[`item.aksi`]="{item}">
-				<v-btn small icon to="/apps/perusahaan/data/edit">
+				<v-btn small icon to="/apps/perusahaan/data/tambah">
 					<v-icon small>
 						mdi-pencil
 					</v-icon>
