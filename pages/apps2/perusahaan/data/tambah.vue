@@ -78,6 +78,7 @@ export default {
 			{ title: 'Pemasaran', icon: 'mdi-shopping', to:"/pemasaran" },
 			{ title: 'Kerjasama Kemitraan', icon: 'mdi-handshake', to:"/kerjasamamitra" },
 			{ title: 'Kemitraan Lainnya', icon: 'mdi-handshake-outline', to:"/kemitraanlainnya" },
+			{ title: 'Cetak', icon: 'mdi-printer', to:"/cetak" },
         ],
         right: null,
     }),
