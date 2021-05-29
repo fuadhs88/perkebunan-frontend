@@ -1,51 +1,48 @@
 <template>
-	<v-col class="mx-auto" sm="12" md="6">
-		<v-card elevation="2">
-			<v-img
-				height="300"
-				src="/bg.jpg"
-				>
-				
-				<v-img class="mx-8 my-8" width="80" src="https://upload.wikimedia.org/wikipedia/commons/3/37/Coat_of_Arms_of_Regency_Kutai_Timur.png"/>
-				
-			</v-img>
-			<v-card-title>Selamat datang di SIBUNGKIL</v-card-title>
-			<v-card-subtitle>
-				Sistem Informasi Perkebunan dengan teknologi unggulan terbaik.
-			</v-card-subtitle>
-
-			<v-card-text>
-				<div>
-				<v-form ref="form" v-model="valid" v-on:submit.prevent="handleSubmit">
-					<v-text-field
-						prepend-icon="mdi-account-circle"
-						label="Username"
-						:rules="rule.name"/>
-					<v-text-field
-						prepend-icon="mdi-eye"
-						label="Password"
-						type="password"
-						:rules="rule.password"/>
-					<div class="text-right">
-						<!-- <v-btn 
-							:disabled="!valid"
-							type="submit"
-							color="primary">
-							Masuk
-						</v-btn> -->
-						<v-btn 
-							to="apps"
-							type="submit"
-							color="primary">
-							Masuk
-						</v-btn>
-					</div>
-				</v-form>
+	<div class="d-flex" style="height:100vh;">
+	<v-col class="mx-auto my-auto" xs="12" md="8" style="justify-content:center">
+		<v-card elevation="4">
+			<v-row no-gutters>
+			<v-col xs="12" md="5" class="primary d-flex" cols="12">
+				<div class="mx-auto my-auto text-center">
+					<v-icon color="white" size="64">mdi-palm-tree</v-icon>
+					<p class="display-1 white--text">SIBUNGKIL</p>
 				</div>
-				
-			</v-card-text>
+			</v-col>
+			<v-col xs="12" md="7">
+				<v-card-title>Masuk</v-card-title>
+				<v-card-subtitle>Sistem Informasi Perkebunan dengan teknologi terbaik</v-card-subtitle>
+				<v-card-text>
+					<v-form ref="form" v-model="valid" v-on:submit.prevent="handleSubmit">
+						<v-text-field
+							prepend-icon="mdi-account-circle"
+							label="Username"
+							:rules="rule.name"/>
+						<v-text-field
+							prepend-icon="mdi-eye"
+							label="Password"
+							type="password"
+							:rules="rule.password"/>
+						<div class="text-right">
+							<!-- <v-btn 
+								:disabled="!valid"
+								type="submit"
+								color="primary">
+								Masuk
+							</v-btn> -->
+							<v-btn 
+								to="/apps2/beranda"
+								color="primary">
+								Masuk
+							</v-btn>
+						</div>
+					</v-form>
+				</v-card-text>
+			</v-col>
+			</v-row>
 		</v-card>
 	</v-col>
+	</div>
 </template>
 <script>
 export default {

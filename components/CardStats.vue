@@ -1,6 +1,6 @@
 <template>
     <v-col :sm="sm" :md="md">
-        <v-card>
+        <v-card class="border--primary">
             <v-card-title>
                 <p class="subtitle-2 mb-0">{{ title }}</p>
             </v-card-title>
