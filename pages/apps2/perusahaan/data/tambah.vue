@@ -17,8 +17,8 @@
 		</Head> -->
 		<v-app>
 			<div class="d-flex">
-			<v-navigation-drawer>
-				
+			<v-navigation-drawer
+				color="muted">
 				<v-list
 					dense
 					nav

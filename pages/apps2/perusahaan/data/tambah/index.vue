@@ -3,7 +3,7 @@
         <p class="subtitle-2">Pilih Form</p>
         <v-row class="mt-6">
 			<v-col v-for="(item, index) in items" :key="index" sm="12" md="4">
-				<v-card elevation="1">
+				<v-card elevation="1" class="border--primary">
 					<!-- <v-card-title class="pb-0">
                         
                     </v-card-title> -->
@@ -13,7 +13,7 @@
 					
                     <v-card-actions>
 						<v-spacer></v-spacer>
-						<v-btn color="primary" text :to="item.to">
+						<v-btn color="primary" text :to="`/apps2/perusahaan/data/tambah${item.to}`">
 							Buka
 							<v-icon right dark>mdi-launch</v-icon>
 						</v-btn>
