@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header title="SIBUNGKIL"/>
+		<Header title="Si Bungkil"/>
 		<v-row class="mt-6">
 			<v-col v-for="(item, index) in apps" :key="index" sm="12" md="3">
 				<v-card>

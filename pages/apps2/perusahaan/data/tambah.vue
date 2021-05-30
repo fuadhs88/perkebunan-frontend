@@ -18,7 +18,10 @@
 		<v-app>
 			<div class="d-flex">
 			<v-navigation-drawer
-				color="muted">
+				color="muted"
+				mini-variant
+				permanent
+				expand-on-hover>
 				<v-list
 					dense
 					nav

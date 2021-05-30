@@ -77,7 +77,7 @@ export default {
           success: colors.green.accent3
         },
         light:{
-          primary:'#4268F6'
+          primary:colors.orange.accent4
         }
 
       }

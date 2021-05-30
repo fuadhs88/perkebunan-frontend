@@ -6,7 +6,8 @@
 			:subtitle="crud.subtitle"
 			:handleDelete="dipilih.length>0 && handleKonfirmasiHapus"
             :color="color">
-            <v-btn small
+            <v-btn 
+                small
                 v-on:click="handleOpenFormTambah">
                 <v-icon left>mdi-plus-circle</v-icon>
                 Tambah

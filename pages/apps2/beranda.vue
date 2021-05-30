@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<Head
-			title="SIBUNGKIL"
-			subtitle="Sistem Informasi Perkebunan Dengan Teknologi Unggulan"
+			title="Si Bungkil"
+			subtitle="Sistim Informasi Pembangunan Perkebunan Berkelanjutan"
 			color="text--black"/>
 		<v-row class="mt-2">
 			
-			<v-col v-for="(item, index) in apps" :key="index" sm="12" md="3">
+			<v-col v-for="(item, index) in apps" :key="index" sm="12" md="3" cols="12">
 				<v-card class="border--primary">
 					<v-card-title class="pb-0">
 						<v-icon left>{{item.ikon}}</v-icon>

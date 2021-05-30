@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<Head
-			title="SIBUNGKIL"
-			subtitle="Sistem Informasi Perkebunan Dengan Teknologi Unggulan"
+			title="Si Bungkil"
+			subtitle="Sistim Informasi Pembangunan Perkebunan Berkelanjutan"
 			color="text--black"/>
 		<v-row class="mt-6">
 			

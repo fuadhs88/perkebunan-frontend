@@ -5,13 +5,13 @@
 			<v-row no-gutters>
 			<v-col xs="12" md="5" class="primary d-flex" cols="12">
 				<div class="mx-auto my-auto text-center">
-					<v-icon color="white" size="64">mdi-palm-tree</v-icon>
-					<p class="display-1 white--text">SIBUNGKIL</p>
+					<v-img src="/logo.svg" width="128" style="display:inline-block"/>
+					<p class="display-1 white--text">Si Bungkil</p>
 				</div>
 			</v-col>
 			<v-col xs="12" md="7">
 				<v-card-title>Masuk</v-card-title>
-				<v-card-subtitle>Sistem Informasi Perkebunan dengan teknologi terbaik</v-card-subtitle>
+				<v-card-subtitle>Sistim Informasi Pembangunan Perkebunan Berkelanjutan</v-card-subtitle>
 				<v-card-text>
 					<v-form ref="form" v-model="valid" v-on:submit.prevent="handleSubmit">
 						<v-text-field

@@ -13,7 +13,7 @@
                 <v-icon left>mdi-delete</v-icon>
                 Hapus
             </v-btn>
-            <v-btn :to="add" small>
+            <v-btn :to="add" small class="d-xs-none">
                 <v-icon left>mdi-plus-circle</v-icon>
                 Tambah
             </v-btn>

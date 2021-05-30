@@ -18,7 +18,7 @@
 				<v-list-item link>
 					<v-list-item-content>
 					<v-list-item-title class="title">
-						SIBUNGKIL
+						Si Bungkil
 					</v-list-item-title>
 					<v-list-item-subtitle>Admin</v-list-item-subtitle>
 					</v-list-item-content>
@@ -90,7 +90,7 @@
 		:absolute="!fixed"
 		app
 		>
-		<span>&copy; {{ new Date().getFullYear() }} Sibungkil</span>
+		<span>&copy; {{ new Date().getFullYear() }} Si Bungkil</span>
 		</v-footer>
 	</v-app>
 </template>
@@ -139,13 +139,13 @@ export default {
 			miniVariant: false,
 			right: true,
 			rightDrawer: false,
-			title: 'SIBUNGKIL'
+			title: 'Si Bungkil'
 		}
 	}
 }
 </script>
 <style>
 .border--primary{
-	border: 1px solid #4268F6!important
+	border: 1px solid #FF6D00!important
 }
 </style>
