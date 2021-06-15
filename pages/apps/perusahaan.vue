@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<Header title="Perusahaan" to="/apps/perusahaan" :menu="menu"/>
+		<!-- <Header title="Perusahaan" to="/apps/perusahaan" :menu="menu"/> -->
 		<nuxt-child></nuxt-child>
 	</div>
 </template>
 <script>
 export default {
-	layout:'apps',
+	layout:'apps2',
 	data: () => ({
 		menu: [
             {

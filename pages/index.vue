@@ -5,34 +5,31 @@
 			<v-row no-gutters>
 			<v-col xs="12" md="5" class="primary d-flex" cols="12">
 				<div class="mx-auto my-auto text-center">
-					<v-img src="/logo.svg" width="128" style="display:inline-block"/>
+					<v-img src="/logo.png" width="128" style="display:inline-block"/>
 					<p class="display-1 white--text">Si Bungkil</p>
 				</div>
 			</v-col>
 			<v-col xs="12" md="7">
 				<v-card-title>Masuk</v-card-title>
-				<v-card-subtitle>Sistim Informasi Pembangunan Perkebunan Berkelanjutan</v-card-subtitle>
+				<v-card-subtitle>Sistem Informasi Pembangunan Perkebunan Berkelanjutan</v-card-subtitle>
 				<v-card-text>
-					<v-form ref="form" v-model="valid" v-on:submit.prevent="handleSubmit">
-						<v-text-field
-							prepend-icon="mdi-account-circle"
-							label="Username"
-							:rules="rule.name"/>
-						<v-text-field
-							prepend-icon="mdi-eye"
-							label="Password"
-							type="password"
-							:rules="rule.password"/>
+					Gunakan akun google anda masuk ke aplikasi.
+					
+					<v-radio-group v-model="roleDipilih">
+						<v-radio
+							v-for="(item, index) in role"
+							:key="index"
+							:label="item"
+							:value="item.replace('calon siswa', 'calon')"
+						></v-radio>
+					</v-radio-group>
+
+					<v-form ref="form">
 						<div class="text-right">
-							<!-- <v-btn 
-								:disabled="!valid"
-								type="submit"
-								color="primary">
-								Masuk
-							</v-btn> -->
 							<v-btn 
-								to="/apps2/beranda"
+								v-on:click="handleSubmit"
 								color="primary">
+								<v-icon left>mdi-google</v-icon>
 								Masuk
 							</v-btn>
 						</div>
@@ -48,20 +45,24 @@
 export default {
 	layout:'blank',
 	data: () => ({
-		valid: false,
-		rule:{
-			name:[
-				v => !!v || 'Username harus diisi',
-			],
-			password:[
-				v => !!v || 'Password harus diisi',
-			]
-		}
+		role: ['admin', 'perusahaan'],
+		roleDipilih: 'admin',
     }),
 	methods:{
-		handleSubmit:()=>{
-			alert("wkwk")
-			return false;
+		handleSubmit:function(){
+			if(this.roleDipilih!="admin"){
+				alert("Maaf, hari ini akses tersebut belum tersedia. akan tersedia besok")
+				return false
+			}
+			this.error = null
+			this.$auth.$storage.setUniversal("loginType", this.roleDipilih)
+			return this.$auth
+				.loginWith('google')
+				.catch((err) => {
+					// eslint-disable-next-line no-console
+					console.error(err)
+					this.error = err.response?.data
+				})
 		}
 	}
 }

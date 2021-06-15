@@ -1,60 +1,263 @@
 <template>
 	<div>
 		<Head 
-			title="Dashboard" 
-			subtitle="Statistik Data Perusahaan"/>
-		
-		<v-row justify="center">
+			title="Perusahaan" 
+			subtitle="Modul Perusahaan untuk kelola data perusahaan"
+			color="text--black">
+			<v-btn v-on:click="dialogForm=true" small class="d-xs-none">
+                <v-icon left>mdi-plus-circle</v-icon>
+                Tambah
+            </v-btn>
+		</Head>
+		<v-row justify="center" class="mt-2">
 			<CardStats 
 				sm="12" 
 				md="3"
 				title="Total Perusahaan" 
-				value="200"/>
+				:value="dataDasbor.total_perusahaan"/>
 			<CardStats 
 				sm="12" 
 				md="3"
 				title="Total Luas Lokasi"
-				value="200"/>
+				:value="dataDasbor.luas_lokasi||0"/>
 			<CardStats 
 				sm="12" 
 				md="3"
-				title="Total Luas Lokasi"
-				value="200"/>
+				title="Total Luas PPUB"
+				:value="dataDasbor.luas_ppub||0"/>
 			<CardStats 
 				sm="12" 
 				md="3"
 				title="Total. IPL" 
-				value="200"/>
+				:value="dataDasbor.luas_ipl||0"/>
 		</v-row>
-
-		<Head 
-			title="Memulai" 
-			subtitle="Berikut langkah-langkah untuk mengelola data perusahaan"/>
-			
-		<CardStep
-			:instruksi="instruksi"
-			:instruksiAktif="instruksiAktif"/>
-		
+		<v-data-table
+			dense
+			:headers="headers"
+			:items="data"
+			item-key="name"
+			class="elevation-1 mt-6"
+			height="65vh">
+			<template v-slot:top>
+				<div class="d-flex px-4 pt-4 align-center">
+					<v-select
+					:items="opsiPencarian"
+					label="Pilih Opsi Pencarian"/>
+					<v-text-field
+						label="Keyword"/>
+					<v-btn class="ml-4">
+						<div class="px-12">
+							Cari
+							<v-icon small right>
+								mdi-account-search-outline
+							</v-icon>
+						</div>
+					</v-btn>
+				</div>
+				
+			</template>
+			<template v-slot:[`item.dibuat`]="{item}">
+				{{$moment(item.dibuat).format('DD MMM, HH:mm:ss')}}
+			</template>
+			<template v-slot:[`item.diubah`]="{item}">
+				{{item.diubah!=null ? $moment(item.diubah).format('DD MMM, HH:mm:ss'): '-'}}
+			</template>
+			<template v-slot:[`item.aksi`]="{item}">
+				<!-- <v-btn small icon to="/apps/perusahaan/data/tambah/cetak">
+					<v-icon small>
+						mdi-printer
+					</v-icon>
+				</v-btn> -->
+				<v-btn 
+					small 
+					icon 
+					:to="`/apps/perusahaan/${item.id}`">
+					<v-icon small>
+						mdi-pencil
+					</v-icon>
+				</v-btn>
+				<v-btn small icon v-on:click="handleKonfirmasiHapus(item)">
+					<v-icon small>
+						mdi-delete
+					</v-icon>
+				</v-btn>
+			</template>
+		</v-data-table>
+		<v-dialog v-model="dialogDelete" max-width="500px">
+			<v-card>
+				<v-card-title class="headline">Apakah anda yakin ingin menghapus data perusahaan ini ?</v-card-title>
+				<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn 
+					text 
+					color="blue darken-1" 
+					v-on:click="dialogDelete=false">Batal</v-btn>
+				<v-btn 
+					text 
+					color="blue darken-1" 
+					v-on:click="handleHapus">OK</v-btn>
+				<v-spacer></v-spacer>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+		<v-dialog
+			v-model="dialogForm"
+			persistent
+			max-width="600px">
+			<v-card>
+				<v-card-title>
+					<span class="text-h5">Tambah Perusahaan</span>
+				</v-card-title>
+				<v-card-text>
+					<v-container>
+						<v-text-field
+							v-model="formData.nama"
+							label="Nama Perusahaan*"
+							required
+							hint="Contoh: PT. ABC 123"/>
+					
+						<v-text-field
+							v-model="formData.email_pengelola"
+							label="Email Pengelola*"
+							hint="Contoh: randiekas@gmail.com"
+							required/>
+					</v-container>
+				<small>*indicates required field</small>
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn
+						color="blue darken-1"
+						text
+						v-on:click="dialogForm = false">
+						Batal
+					</v-btn>
+					<v-btn
+						color="blue darken-1"
+						text
+						v-on:click="handleTambahPerusahaan"
+						:disabled="formData.nama==='' || formData.email_pengelola===''">
+						Simpan
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+		<v-dialog
+			v-model="isFetching"
+			hide-overlay
+			persistent
+			width="300">
+			<v-card
+				color="primary"
+				dark>
+				<v-card-text>
+				Memproses
+				<v-progress-linear
+					indeterminate
+					color="white"
+					class="mb-0"
+				></v-progress-linear>
+				</v-card-text>
+			</v-card>
+		</v-dialog>
+		<v-dialog
+            v-if="alert.show"
+			v-model="alert.show"            
+			width="300">
+			<v-alert
+                v-model="alert.show"
+                border="top"
+                color="green accent-4"
+                dark
+                dismissible
+                type="success"
+                >
+                {{ alert.message }}
+            </v-alert>
+		</v-dialog>
 	</div>
 </template>
 <script>
 export default {
+	mounted: function(){
+		this.handleUpdateDataDasbor()
+		this.handleUpdateData()
+	},
 	data: ()=>({
-		instruksiAktif:1,
-		instruksi:[
-			{
-				judul: "Setup data akun perusahaan",
-				instruksi: "Membuat akun perusahaan, agar perusahaan dapat update data. Contoh : Perusahaan PT ABC,",
-			},
-			{
-				judul: "Kelola data perusahaan",
-				instruksi: "Melihat laporan data perusahaan",
-			},
-			{
-				judul: "Pelaporan",
-				instruksi: "Cetak laporan data perusahaan",
-			},
-		]
-	})
+		dataDasbor: {},
+		isFetching:false,
+		dialogForm:false,
+		formData:{
+			nama: '',
+			email_pengelola:'',
+		},
+		alert: {
+			show:false,
+			message: ''
+		},
+		dialogDelete: false,
+		data: [],
+		perusahaan: {},
+		headers: [
+			{ text: 'Nama Perusahaan', value: 'nama' },
+			{ text: 'NPWP', value: 'npwp' },
+			{ text: 'Kantor Pusat', value: 'alamat_kantor_pusat' },
+			{ text: 'Kantor Cabang', value: 'alamat_kantor_cabang' },
+			{ text: 'Kebun', value: 'nama_kebun' },
+			{ text: 'Dibuat', value: 'dibuat' },
+			{ text: 'Diubah', value: 'diubah' },			
+			{ text: 'Aksi', value: 'aksi' },
+		],
+		opsiPencarian: ['Nama Perusahaan', 'NPWP', 'Nama Kebun'],
+	}),
+	methods:{
+		handleKonfirmasiHapus(item){
+			// console.log(this)
+			this.perusahaan		= item
+			this.dialogDelete	= true
+		},
+		handleHapus(){
+			this.isFetching		= true
+			this.$api.$get(`/v1/api/hapus/perusahaan/${this.perusahaan.id}`).then((resp)=>{
+				this.isFetching	= false
+				this.alert		= {
+					show:true,
+					message:"Data perusahaan berhasil ditambahkan"
+				}
+				if(resp.status){
+					this.handleUpdateData()
+					this.dialogForm	= false
+				}
+			})
+			this.dialogDelete	= false
+		},
+		async handleUpdateData(){
+			const data 	= (await this.$api.$get('/v1/api/data/perusahaan'))
+			this.data	= data.data
+		},
+		handleTambahPerusahaan(){
+			this.isFetching		= true
+			this.$api.$post('/v1/api/tambah/perusahaan', this.formData).then((resp)=>{
+				this.isFetching	= false
+				this.alert		= {
+					show:true,
+					message:"Data perusahaan berhasil ditambahkan"
+				}
+				if(resp.status){
+					this.handleUpdateData()
+					this.dialogForm	= false
+					this.formData	= {
+							nama: '',
+							email_pengelola:'',
+						}
+				}
+			})
+		},
+		async handleUpdateDataDasbor(){
+			const data 		= (await this.$api.$get('/v1/api/dasborPerusahaan'))
+			this.dataDasbor	= data.data
+		},
+	}
+	
 }
 </script>

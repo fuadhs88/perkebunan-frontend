@@ -11,7 +11,7 @@
 			<v-list>
 				<v-list-item class="px-2">
 					<v-list-item-avatar>
-					<v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+						<v-img :src="user.picture"></v-img>
 					</v-list-item-avatar>
 				</v-list-item>
 
@@ -20,7 +20,7 @@
 					<v-list-item-title class="title">
 						Si Bungkil
 					</v-list-item-title>
-					<v-list-item-subtitle>Admin</v-list-item-subtitle>
+					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
@@ -30,7 +30,7 @@
 			<v-list>
 				<v-list-item
 					color="primary"
-					to="/apps2/beranda">
+					to="/apps/beranda">
 					<v-list-item-action>
 						<v-icon>mdi-apps</v-icon>
 					</v-list-item-action>
@@ -98,7 +98,14 @@
 <script>
 export default {
 	data () {
+		let user = this.$auth.user
+		let tipe = this.$auth.$storage.getUniversal("loginType")
+		if(!user){
+			this.$router.push(`/`) 
+		}
 		return {
+			user,
+			tipe,
 			clipped: false,
 			drawer: false,
 			fixed: false,
@@ -107,33 +114,33 @@ export default {
 					"ikon": "mdi-domain",
 					"nama":"Perusahaan",
 					"deskripsi":"Sistem Pengelolaan informasi perusahaan",
-					"link":"/apps2/perusahaan"
+					"link":"/apps/perusahaan"
 				},
 				{
 					"ikon": "mdi-cash-multiple",
 					"nama":"Keuangan",
 					"deskripsi":"Sistem Pengelolaan Data Keuangan Terpadu",
-					"link":"/apps2/keuangan"
+					"link":"/apps/keuangan"
 				},
 				{
 					"ikon": "mdi-account-tie",
 					"nama":"Kepegawaian",
 					"deskripsi":"Sistem Pengelolaan Data Kepegawaian Terpadu",
-					"link":"/apps2/kepegawaian"
+					"link":"/apps/kepegawaian"
 				},
 				{
 					"ikon": "mdi-calendar-clock",
 					"nama":"Kehadiran",
 					"deskripsi":"Sistem Pengelolaan Data Kehadiran Terpadu",
 					"link":"ppdb",
-					"link":"/apps2/kehadiran"
+					"link":"/apps/kehadiran"
 				},
 				{
 					"ikon": "mdi-book-open-variant",
 					"nama":"LMS",
 					"deskripsi":"Learning Mangement System untuk pegawai baru",
 					"link":"lms",
-					"link":"/apps2/lms"
+					"link":"/apps/lms"
 				},
 			],
 			miniVariant: false,

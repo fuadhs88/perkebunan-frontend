@@ -5,9 +5,8 @@
 			:title="crud.title" 
 			:subtitle="crud.subtitle"
 			:handleDelete="dipilih.length>0 && handleKonfirmasiHapus"
-            :color="color">
-            <v-btn 
-                small
+            color="text--black">
+            <v-btn small
                 v-on:click="handleOpenFormTambah">
                 <v-icon left>mdi-plus-circle</v-icon>
                 Tambah
@@ -16,15 +15,12 @@
         <!-- untuk table -->
 		<v-data-table
 			dense
-			v-model="dipilih"
-			:headers="crud.headers"
+			:headers="crud.headers.filter((item)=>item.table!=false)"
             :hide-default-header="crud.nested"
-			:items="crud.data||data"
+			:items="data"
 			item-key="name"
-			show-select
 			class="elevation-1"
 			height="65vh">
-            
             <template
                 v-if="crud.nested"
                 v-slot:header="{ props: {headers} }">
@@ -69,13 +65,13 @@
                         :class="`text-xs-${c.align}`">
                         {{ v.format ? v.format(items[v.value]) : items[v.value] }}
                     </td>
-                </template>
+            </template>
             </template>
 			<template v-slot:[`item.status`]="{item}">
 				<v-switch v-model="item.status" readonly class="mt-0" style="height:-webkit-fill-available"/>
 			</template>
 			<template v-slot:[`item.aksi`]="{item}">
-				<v-btn small icon v-on:click="handleOpenFormEdit">
+				<v-btn small icon v-on:click="handleOpenFormEdit(item)">
 					<v-icon small>
 						mdi-pencil
 					</v-icon>
@@ -100,31 +96,11 @@
 
                 <v-card-text>
                     <v-container>
-                        <v-form ref="form" v-model="valid">
-                            <div 
-                                v-for="(item, index) in crud.headers.filter((item)=>item.form!=false)"
-                                :key="index">
-                                <!-- jika tipenya switct -->
-                                <v-switch 
-                                    v-if="item.type==='switch'"
-                                    :label="item.text"
-                                    v-model="item.status" 
-                                    class="mt-0" />
-                                <!-- jika tipenya number -->
-                                <v-text-field
-                                    v-else-if="item.type==='number'"
-                                    type="number"
-                                    :label="item.text"
-                                    :messages="item.info"
-                                    placeholder="tes"/>
-                                <!-- jika tipenya text -->
-                                <v-text-field
-                                    v-else
-                                    :label="item.text"
-                                    :messages="item.info"
-                                    placeholder="tes"/>
-                            </div>
-                        </v-form>
+                        <Form
+                            :fields="crud.headers"
+                            :model="model"
+                            :isFetching="isFetching"
+                            :dialog="dialog"/>
                     </v-container>
                 </v-card-text>
                 
@@ -139,8 +115,7 @@
                 <v-btn
                     color="blue darken-1"
                     text
-                    
-                >
+                    v-on:click="handleSimpan">
                     Simpan
                 </v-btn>
                 </v-card-actions>
@@ -165,31 +140,79 @@
 </template>
 <script>
 export default {
-    props: ["crud", "color"],
+    props: ["crud"],
 	data: () => ({
-        valid:false,
+        isFetching: false,
+        dialog: {},
+        model: {},
+        isFetching:false,
 		dipilih: [],
 		dialogForm: false,
 		dialogDelete: false,
 		dialogTitle: '',
-		data: [],
+        data: [],
     }),
+    mounted(){ 
+        this.handleUpdateData()
+    },
 	methods:{
-		handleKonfirmasiHapus(){
+		handleKonfirmasiHapus(item){
 			// console.log(this)
+            this.model        = Object.assign({}, item)
 			this.dialogDelete	= true
 		},
 		handleHapus(){
+            this.isFetching     = true
+            this.$api.$get(`${this.crud.apiHapus}/${this.model.id}`).then((resp)=>{
+                this.isFetching     = false
+                this.dialog     = {
+                    message: resp.message,
+                    status: resp.status
+                }
+                if(resp.status){
+                    this.dialogDelete	= false
+                    this.handleUpdateData()
+                    // this.$nuxt.refresh()
+				}
+                
+            })
+            
 			this.dialogDelete	= false
 		},
         handleOpenFormTambah(){
             this.dialogTitle    = "Tambah"
+            this.model			= {}
             this.dialogForm     = true
         },
-        handleOpenFormEdit(){
+        handleOpenFormEdit(item){
             this.dialogTitle    = "Edit"
             this.dialogForm     = true
+            this.model          = Object.assign({}, item)
         },
+        handleUpdateData: async function (){
+            let data = (await this.$api.$get(this.crud.apiData)).data
+            this.data   = data
+        },
+        handleSimpan: function(){
+			this.isFetching = true
+            let payload     = {}
+            this.crud.headers.filter((item)=>item.form!=false).map((item)=>{
+                payload[item.value] = this.model[item.value]!=undefined?this.model[item.value]:''
+            })
+            const api = this.model.id?`${this.crud.apiUbah}/${this.model.id}`:this.crud.apiTambah
+			this.$api.$post(api, payload).then(async (resp)=>{
+                this.isFetching = false
+                this.dialog     = {
+                    message: resp.message,
+                    status: resp.status
+                }
+				if(resp.status){
+                    this.dialogForm     = false
+                    this.handleUpdateData()
+                    // this.$nuxt.refresh()
+				}
+			})
+		},
         processTableHeaders(headers) {
             
             const nested = !!headers.some(h => h.children)
