@@ -81,7 +81,7 @@
                         <td v-else
                             v-for="c in v.children"
                             :key="c.value"
-                            :class="`text-start text-${c.align||'center'}`">
+                            :class="`text-start text-xs text-${c.align||'center'}`">
                             {{ item[c.value] }}
                         </td>
                     </template>
