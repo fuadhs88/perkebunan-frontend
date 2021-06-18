@@ -7,21 +7,46 @@
 </template>
 <script>
 export default {
-    data: () => ({
+    props: ['id_perusahaan'],
+    data(){
+        return {
         crud:{
             nested:true,
 			title: "Pemasaran",
 			subtitle: "Kelola Data Pemasaran",
+            apiData: `/v1/api/data/perusahaan_pemasaran/id_perusahaan/${this.id_perusahaan}`,
+            apiTambah: `/v1/api/tambah/perusahaan_pemasaran?id_perusahaan=${this.id_perusahaan}`,
+            apiUbah: `/v1/api/ubah/perusahaan_pemasaran`,
+            apiHapus: `/v1/api/hapus/perusahaan_pemasaran`,
+
 			headers: [
                     {
-                        text: 'No',
-                        value: 'no',
-                        info: ['Contoh : 1,2,3']
-                    }, 
-                    {
                         text: 'Jenis Produksi',
-                        value: 'jenis_produksi',
-                        info: ['Contoh : TBS, Kernel, CPO']
+                        value: 'jenis',
+                        type:'radio',
+                        options: [
+                            {
+                                label: 'TBS',
+                                value: 'TBS',
+                            },
+                            {
+                                label: 'Kernel',
+                                value: 'Kernel',
+                            },
+                            {
+                                label: 'CPO',
+                                value: 'CPO',
+                            },
+                            {
+                                label: 'PKO',
+                                value: 'PKO',
+                            },
+                            {
+                                label: 'PKE',
+                                value: 'PKE',
+                            },
+                        ],
+                        
                     }, 
                     {
                         text: 'Satuan',
@@ -35,11 +60,11 @@ export default {
                         children:[
                             {
                                 text: 'Volume',
-                                value: 'dalam_negeri_volume',
+                                value: 'dn_volume',
                             },
                             {
                                 text: 'Nilai',
-                                value: 'dalam_negeri_nilai',
+                                value: 'dn_nilai',
                             },
                         ]
                     }, 
@@ -58,9 +83,16 @@ export default {
                             },
                         ]
                     }, 
+                    {
+                        text: 'Aksi',
+                        value: 'aksi',
+                        align: "center",
+                        form: false
+                    }
                 ],
             data:[]
+            }
         }
-    }),
+    }
 }
 </script>

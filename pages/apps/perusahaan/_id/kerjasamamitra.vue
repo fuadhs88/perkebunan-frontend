@@ -7,24 +7,31 @@
 </template>
 <script>
 export default {
-    data: () => ({
+    props: ['id_perusahaan'],
+    data(){
+        return {
         crud:{
             nested:true,
 			title: "Kerjasama Kemitraan",
 			subtitle: "Kelola Data Kerjasama Kemitraan",
+            apiData: `/v1/api/data/perusahaan_kerjasama_kemitraan/id_perusahaan/${this.id_perusahaan}`,
+            apiTambah: `/v1/api/tambah/perusahaan_kerjasama_kemitraan?id_perusahaan=${this.id_perusahaan}`,
+            apiUbah: `/v1/api/ubah/perusahaan_kerjasama_kemitraan`,
+            apiHapus: `/v1/api/hapus/perusahaan_kerjasama_kemitraan`,
+
 			headers: [
-                    {
-                        text: 'No',
-                        value: 'no',
-                        info: ['Contoh : 1,2,3']
-                    }, 
                     {
                         text: 'Nama Koperasi',
                         value: 'nama_koperasi',
                     }, 
                     {
-                        text: 'No dan Tgl MOU',
+                        text: 'No MOU',
                         value: 'no_mou',
+                    }, 
+                    {
+                        text: 'Tanggal MOU',
+                        value: 'tanggal_mou',
+                        type: 'date',
                     }, 
                     {
                         text: 'target',
@@ -34,10 +41,12 @@ export default {
                             {
                                 text: 'KK',
                                 value: 'target_kk',
+                                type: 'number',
                             },
                             {
                                 text: 'Luas (Ha)',
                                 value: 'target_luas',
+                                type: 'number',
                             },
                         ]
                     }, 
@@ -49,24 +58,35 @@ export default {
                             {
                                 text: 'KK',
                                 value: 'realisasi_kk',
+                                type: 'number',
                             },
                             {
                                 text: 'TBM',
-                                value: 'realisasi_tbm',
+                                value: 'realisasi_luas_tbm',
+                                type: 'number',
                             },
                             {
                                 text: 'TM',
-                                value: 'realisasi_tm',
+                                value: 'realisasi_luas_tm',
+                                type: 'number',
                             },
                         ]
                     }, 
                     {
                         text: 'Tahun Tanam',
                         value: 'tahun_tanam',
+                        type: 'number',
                     }, 
+                    {
+                        text: 'Aksi',
+                        value: 'aksi',
+                        align: "center",
+                        form: false
+                    }
                 ],
             data:[]
+            }
         }
-    }),
+    }
 }
 </script>

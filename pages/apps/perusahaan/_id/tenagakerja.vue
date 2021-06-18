@@ -10,6 +10,7 @@ export default {
     data(){
         return {
             crud: {
+                nested: true,
                 title: "Tenaga Kerja",
                 subtitle: "Kelola data Tenaga Kerja",
                 apiData: `/v1/api/data/perusahaan_tenaga_kerja/id_perusahaan/${this.id_perusahaan}`,
@@ -21,6 +22,7 @@ export default {
                     {
                         text: 'Tipe',
                         value: 'tipe',
+                        align: "center",
                         type:'radio',
                         options: [
                             {
@@ -45,53 +47,77 @@ export default {
                     {
                         text: 'Uraian',
                         value: 'uraian',
+                        align: "center",
                         info: ['masukkan jabatan, Contoh : General Manager, Manager Kebun']
                     }, 
                     {
-                        text: 'KWN Asing',
-                        value: 'kewarganegaraan_asing',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
+                        text: 'Kewarganegaraan',
+                        value: 'uraian',
+                        align: "center",
+                        children: [
+                            {
+                                text: 'Asing',
+                                value: 'kewarganegaraan_asing',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                            {
+                                text: 'Indonesia',
+                                value: 'kewarganegaraan_indonesia',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                        ],
                     }, 
                     {
-                        text: 'KWN Indonesia',
-                        value: 'kewarganegaraan_indonesia',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
+                        text: 'Staff & Karyawan',
+                        value: 'uraian',
+                        align: "center",
+                        children: [
+                            {
+                                text: 'Bulanan',
+                                value: 'sk_bulanan',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                            {
+                                text: 'H. Tetap',
+                                value: 'sk_harian_tetap',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                            {
+                                text: 'H. Lepas',
+                                value: 'sk_harian_lepas',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                        ],
                     }, 
                     {
-                        text: 'S&K Karyawan Bulanan',
-                        value: 'sk_bulanan',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
+                        text: 'Kelamin',
+                        value: 'uraian',
+                        align: "center",
+                        children: [
+                            {
+                                text: 'L',
+                                value: 'jenis_kelamin_p',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                            {
+                                text: 'P',
+                                value: 'jenis_kelamin_w',
+                                type: 'number',
+                                info: ['satuan (orang), Contoh : 20'],
+                            }, 
+                        ],
                     }, 
-                    {
-                        text: 'S&K Harian Tetap',
-                        value: 'sk_harian_tetap',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
-                    }, 
-                    {
-                        text: 'S&K Harian Lepas',
-                        value: 'sk_harian_lepas',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
-                    }, 
-                    {
-                        text: 'Jumlah Pria',
-                        value: 'jenis_kelamin_p',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
-                    }, 
-                    {
-                        text: 'Jumlah Wanita',
-                        value: 'jenis_kelamin_w',
-                        type: 'number',
-                        info: ['satuan (orang), Contoh : 20'],
-                    }, 
+                    
                     {
                         text: 'Aksi',
                         value: 'aksi',
+                        align: "center",
                         form: false
                     }
                 ],

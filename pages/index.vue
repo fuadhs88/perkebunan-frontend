@@ -5,8 +5,7 @@
 			<v-row no-gutters>
 			<v-col xs="12" md="5" class="primary d-flex" cols="12">
 				<div class="mx-auto my-auto text-center">
-					<v-img src="/logo.png" width="128" style="display:inline-block"/>
-					<p class="display-1 white--text">Si Bungkil</p>
+					<v-img src="/logo.png" style="display:inline-block"/>
 				</div>
 			</v-col>
 			<v-col xs="12" md="7">

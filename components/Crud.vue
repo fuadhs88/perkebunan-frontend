@@ -53,19 +53,54 @@
             <template 
                 v-if="crud.nested"
                 v-slot:body="{items}">
-                <template v-for="v in crud.headers">
-                    <td v-if="!v.children"
-                        :key="v.value"
-                        :class="`text-xs-${v.align}`">
-                        {{ v.format ? v.format(items[v.value]) : items[v.value] }}
+                <tr
+                    v-for="(item, index) in items"
+                    :key="index">
+                    <template
+                        v-for="(v, vindex) in crud.headers.filter((item)=>item.table!=false)">
+                        <td
+                            v-if="!v.children"
+                            :key="vindex"
+                            :class="`text-start text-${v.align||'center'}`">
+                            <span v-if="v.value!='aksi'"> 
+                                {{ item[v.value] }}
+                            </span>
+                            <div v-else>
+                                <v-btn small icon v-on:click="handleOpenFormEdit(item)">
+                                    <v-icon small>
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn small icon v-on:click="handleKonfirmasiHapus(item)">
+                                    <v-icon small>
+                                        mdi-delete
+                                    </v-icon>
+                                </v-btn>
+                            </div>
+                            </td>
+                        <td v-else
+                            v-for="c in v.children"
+                            :key="c.value"
+                            :class="`text-start text-${c.align||'center'}`">
+                            {{ item[c.value] }}
+                        </td>
+                    </template>
+                </tr>
+                <!-- <template 
+                    v-for="v in crud.headers.filter((item)=>item.table!=false)"
+                    v-slot:props="{ props: { items2}}">
+                    <td
+                        v-if="!v.children"
+                        :key="v.value">
+                        {{ item }}
                     </td>
                     <td v-else
                         v-for="c in v.children"
                         :key="c.value"
                         :class="`text-xs-${c.align}`">
-                        {{ v.format ? v.format(items[v.value]) : items[v.value] }}
+                        {{ items }}
                     </td>
-            </template>
+                </template> -->
             </template>
 			<template v-slot:[`item.status`]="{item}">
 				<v-switch v-model="item.status" readonly class="mt-0" style="height:-webkit-fill-available"/>
@@ -95,12 +130,28 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <v-container>
+                    <v-container v-if="crud.nested===undefined">
                         <Form
                             :fields="crud.headers"
                             :model="model"
                             :isFetching="isFetching"
                             :dialog="dialog"/>
+                    </v-container>
+                    <v-container v-else>
+                        <Form
+                            :fields="crud.headers.filter((item)=>item.children===undefined)"
+                            :model="model"
+                            :isFetching="isFetching"
+                            :dialog="dialog"/>
+                        <div
+                            v-for="(item, index) in crud.headers.filter((item)=>item.children!=undefined)"
+                            :key="index">
+                            <p class="subtitle-3 mb-0">{{item.text}}</p>
+                            <Form
+                                class="ml-6 mb-6"
+                                :fields="item.children"
+                                :model="model"/>
+                        </div>
                     </v-container>
                 </v-card-text>
                 
@@ -196,8 +247,15 @@ export default {
         handleSimpan: function(){
 			this.isFetching = true
             let payload     = {}
+            
             this.crud.headers.filter((item)=>item.form!=false).map((item)=>{
-                payload[item.value] = this.model[item.value]!=undefined?this.model[item.value]:''
+                if(item.children===undefined){
+                    payload[item.value]     = this.model[item.value]!=undefined?this.model[item.value]:''
+                }else{
+                    item.children.map((row)=>{
+                        payload[row.value] = this.model[row.value]!=undefined?this.model[row.value]:''
+                    })
+                }
             })
             const api = this.model.id?`${this.crud.apiUbah}/${this.model.id}`:this.crud.apiTambah
 			this.$api.$post(api, payload).then(async (resp)=>{
