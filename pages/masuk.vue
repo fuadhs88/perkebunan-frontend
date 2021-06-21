@@ -33,7 +33,9 @@ export default {
 				$auth.$storage.setUniversal("_token.google", token)
 				window.location.href='/apps/beranda'
 			}else{
-				info	= resp.message
+				if(confirm(resp.message)){
+					window.location.href='/'
+				}
 			}
 		})
 		return {

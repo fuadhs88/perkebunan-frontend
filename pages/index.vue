@@ -45,12 +45,12 @@ export default {
 	layout:'blank',
 	data: () => ({
 		role: ['admin', 'perusahaan'],
-		roleDipilih: 'admin',
+		roleDipilih: window.innerWidth>480?'admin':'perusahaan',
     }),
 	methods:{
 		handleSubmit:function(){
-			if(this.roleDipilih!="admin"){
-				alert("Maaf, hari ini akses tersebut belum tersedia. akan tersedia besok")
+			if(window.innerWidth<=480 && this.roleDipilih=="admin"){
+				alert("Maaf, untuk admin silahkan buka versi website")
 				return false
 			}
 			this.error = null

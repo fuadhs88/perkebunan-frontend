@@ -3,8 +3,10 @@
 		<v-app>
 			<div class="d-flex">
 			<v-navigation-drawer
+				class="d-none d-lg-flex"
 				color="muted"
-				permanent>
+				permanent
+				>
 				<v-list
 					dense
 					nav>
@@ -25,7 +27,7 @@
 					</v-list-item>
 				</v-list>
 			</v-navigation-drawer>
-			<v-col class="mx-auto">
+				<v-col>
 					<nuxt-child 
 						:id_perusahaan="id_perusahaan"/>
 				</v-col>
@@ -71,6 +73,7 @@ export default {
 			{ title: 'Kemitraan Lainnya', icon: 'mdi-handshake-outline', to:"/kemitraanlainnya" },
 			{ title: 'CSR', icon: 'mdi-gift', to:"/csr" },
 			{ title: 'Permasalahan', icon: 'mdi-folder-alert', to:"/permasalahan" },
+			{ title: 'Galeri', icon: 'mdi-image-multiple', to:"/galeri" },
 			{ title: 'Cetak', icon: 'mdi-printer', to:"/cetak" },
         ],
         right: null,

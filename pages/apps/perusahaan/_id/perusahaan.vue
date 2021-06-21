@@ -93,6 +93,16 @@ export default {
                     value: 'lokasi_kebun_provinsi',
                     info: ['Contoh : Kalimantan Timur'],
                 }, 
+                {
+                    text: 'Posisi latitude Kebun',
+                    value: 'lokasi_kebun_lat',
+                    info: ['Contoh : 0.1409258'],
+                }, 
+                {
+                    text: 'Posisi latitude Kebun',
+                    value: 'lokasi_kebun_lng',
+                    info: ['Contoh : 117.4908734'],
+                }, 
             ]
         }
     },

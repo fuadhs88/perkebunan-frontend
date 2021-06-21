@@ -119,7 +119,7 @@
 						<v-text-field
 							v-model="formData.email_pengelola"
 							label="Email Pengelola*"
-							hint="Contoh: randiekas@gmail.com"
+							hint="Contoh: email@gmail.com"
 							required/>
 					</v-container>
 				<small>*indicates required field</small>
@@ -200,10 +200,7 @@ export default {
 		perusahaan: {},
 		headers: [
 			{ text: 'Nama Perusahaan', value: 'nama' },
-			{ text: 'NPWP', value: 'npwp' },
 			{ text: 'Kantor Pusat', value: 'alamat_kantor_pusat' },
-			{ text: 'Kantor Cabang', value: 'alamat_kantor_cabang' },
-			{ text: 'Kebun', value: 'nama_kebun' },
 			{ text: 'Dibuat', value: 'dibuat' },
 			{ text: 'Diubah', value: 'diubah' },			
 			{ text: 'Aksi', value: 'aksi' },

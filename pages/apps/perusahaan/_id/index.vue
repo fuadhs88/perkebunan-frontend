@@ -13,7 +13,7 @@
 					
                     <v-card-actions>
 						<v-spacer></v-spacer>
-						<v-btn color="primary" text :to="`/apps/perusahaan/8${item.to}`">
+						<v-btn color="primary" text :to="`/apps/perusahaan/${id_perusahaan}${item.to}`">
 							Buka
 							<v-icon right dark>mdi-launch</v-icon>
 						</v-btn>
@@ -25,6 +25,7 @@
 </template>
 <script>
 export default {
+	props: ['id_perusahaan'],
     data: () => ({
         items: [
 			{ title: 'Data Perusahaan', icon: 'mdi-view-dashboard', to:"/perusahaan" },

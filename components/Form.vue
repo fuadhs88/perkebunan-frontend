@@ -58,15 +58,41 @@
                 v-model="model[item.value]"/>
                 
             <!-- jika tipenya file -->
-            <ButtonGDrive 
+            <!-- <ButtonGDrive 
                 v-else-if="item.type==='file'"
                 :index="index"
                 :label="item.text"
                 :hint="item.info?item.info[0]:''"
                 :onUploaded="(file)=>{model[item.value]=file}"
-                v-model="model[item.value]"/>
+                v-model="model[item.value]"/> -->
+            <div
+                v-else-if="item.type==='file'">
+                <input 
+                    accept="image/png,image/jpg,image/jpeg"
+                    type="file" 
+                    style="display:none"
+                    :id="`file-${index}`" 
+                    :itemvalue="item.value"
+                    v-on:change="handelUploadFile"
+                    />
+                
+                <v-text-field
+                    :label="item.text"
+                    :hint="item.info?item.info[0]:''"
+                    v-model="model[item.value]">
+                    <v-btn
+                        small
+                        slot="append-outer"
+                        v-on:click="handelPilihFile(index)"
+                        target="_blank">
+                        <v-icon left dark>mdi-launch</v-icon>
+                        Pilih File
+                    </v-btn>
+                </v-text-field>
+            </div>
                 <!-- <v-file-input
-                accept="image/pdf"
+                accept="image/png,image/jpg,image/jpeg"
+                v-else-if="item.type==='file'"
                 :label="item.text"
                 :hint="item.info?item.info[0]:''"
                 v-model="model[item.value]"/> -->
@@ -93,6 +119,27 @@
                 :hint="item.info?item.info[0]:''"
                 v-model="model[item.value]"/>
         </div>
+        <!-- dialog -->
+        <v-dialog
+			v-model="isSaving"
+			hide-overlay
+			persistent
+			width="300"
+			>
+			<v-card
+				color="primary"
+				dark
+			>
+				<v-card-text>
+				Menyimpan ...
+				<v-progress-linear
+					indeterminate
+					color="white"
+					class="mb-0"
+				></v-progress-linear>
+				</v-card-text>
+			</v-card>
+		</v-dialog>
         <!-- dialog -->
         <v-dialog
 			v-model="isFetching"
@@ -135,8 +182,39 @@
 export default {
     props: ['fields', 'model', 'dialog', 'isFetching'],
     data: () => ({
-        modal:false
+        modal:false,
+        isSaving: false,
     }),
+    methods:{
+        handelPilihFile: function(index){
+            document.getElementById(`file-${index}`).click()
+        },
+        handelUploadFile: function(event){
+            this.isSaving = true
+            const payload   = new FormData();
+            payload.append("files", event.target.files[0])
+            
+            this.$api.$post('/v1/api/upload', payload, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }).then(async (resp)=>{
+                this.isSaving = false
+                this.model[event.target.attributes.itemvalue.value] = resp.data
+                // this.isFetching = false
+                // this.dialog     = {
+                //     message: resp.message,
+                //     status: resp.status
+                // }
+				// if(resp.status){
+                //     this.dialogForm     = false
+                //     this.handleUpdateData()
+                //     // this.$nuxt.refresh()
+				// }
+			})
+
+        },
+    },
     watch: {
         dialog: {
             // the callback will be called immediately after the start of the observation
@@ -145,9 +223,9 @@ export default {
                 if(val && val.message){
                     this.modal  = true
                 }
-            // do your stuff
+                // do your stuff
             }
-        }
+        },
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex justify-center">
+	<div class="justify-center">
 		<!-- <Head 
 			class="mx-auto my-auto text-center"
 			title="Opps" 
