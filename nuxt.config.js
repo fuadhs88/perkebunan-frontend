@@ -105,6 +105,7 @@ export default {
 	pwa: {
 		manifest: {
 			name: 'Si Bungkil',
+			short_name: 'Si Bungkil',
 			description: 'Sistem Informasi Perkebunan',
 			lang: 'en',
 		}
