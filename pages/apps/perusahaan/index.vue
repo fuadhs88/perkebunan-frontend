@@ -10,10 +10,10 @@
             </v-btn>
 		</Head>
 		<GMap
+			v-if="data.length>0"
 			style="margin-left: -32px; margin-right: -32px;"
 			ref="gMap"
 			language="id"
-			:cluster="{options: {styles: clusterStyle}}"
 			:center="{lat: -0.897788, lng: 117.5383008}"
 			:options="{fullscreenControl: true}"
 			:zoom="5.27"
