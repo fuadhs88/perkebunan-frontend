@@ -9,6 +9,28 @@
                 Tambah
             </v-btn>
 		</Head>
+		<GMap
+			style="margin-left: -32px; margin-right: -32px;"
+			ref="gMap"
+			language="id"
+			:cluster="{options: {styles: clusterStyle}}"
+			:center="{lat: -0.897788, lng: 117.5383008}"
+			:options="{fullscreenControl: true}"
+			:zoom="5.27"
+			>
+				<GMapMarker
+					v-for="(location, index) in data.filter((item)=>item.lokasi_kebun_lat!='' || item.lokasi_kebun_lat!=null)"
+					:key="index"
+					:position="{lat: location.lokasi_kebun_lat, lng: location.lokasi_kebun_lng}"
+					@click="currentLocation = location">
+						<GMapInfoWindow :options="{maxWidth: 200}">
+						<code>
+							{{ location.nama }}
+						</code>
+						</GMapInfoWindow>
+				</GMapMarker>
+				<GMapCircle :options="circleOptions"/>
+			</GMap>
 		<v-row justify="center" class="mt-2">
 			<CardStats 
 				sm="12" 
@@ -184,6 +206,35 @@ export default {
 		this.handleUpdateData()
 	},
 	data: ()=>({
+		currentLocation: {},
+		circleOptions: {
+		
+		},
+		locations: [
+			{
+				lat: 44.933076,
+				lng: 15.629058
+			},
+			{
+				lat: 45.815,
+				lng: "15.9819"
+			},
+			{
+				lat: "45.12",
+				lng: "16.21"
+			}
+		],
+		mapStyle: [],
+		clusterStyle: [
+			{
+				url: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png",
+				width: 56,
+				height: 56,
+				textColor: "#fff"
+			}
+		],
+
+
 		dataDasbor: {},
 		isFetching:false,
 		dialogForm:false,

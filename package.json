@@ -17,6 +17,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3",
+    "nuxt-gmaps": "^1.2.10",
     "vue-html2pdf": "^1.8.0"
   },
   "devDependencies": {
