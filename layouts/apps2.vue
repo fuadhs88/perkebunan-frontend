@@ -118,6 +118,12 @@ export default {
 						"link":"/apps/perusahaan"
 					},
 					{
+						"ikon": "mdi-bullhorn",
+						"nama":"Pengumuman",
+						"deskripsi":"Pengumuman untuk semua perusahaan",
+						"link":"/apps/pengumuman"
+					},
+					{
 						"ikon": "mdi-cash-multiple",
 						"nama":"Keuangan",
 						"deskripsi":"Sistem Pengelolaan Data Keuangan Terpadu",
@@ -143,6 +149,7 @@ export default {
 					},
 				],
 				perusahaan: [
+					{ nama: 'Pengumuman', ikon: 'mdi-bullhorn', link:"/apps/pengumuman" },
 					{ nama: 'Data Perusahaan', ikon: 'mdi-view-dashboard', link:"/apps/perusahaan/1/perusahaan" },
 					{ nama: 'Legalitas', ikon: 'mdi-file', link:"/apps/perusahaan/1/legalitas" },
 					{ nama: 'Lahan Pembibitan', ikon: 'mdi-map-marker-multiple', link:"/apps/perusahaan/1/pembibitan" },
