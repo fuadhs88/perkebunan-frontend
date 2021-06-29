@@ -6,7 +6,7 @@
             color="text--black"/>
         <v-btn
             v-if="detil.lampiran!=''"
-            :href="detil.lampiran"
+            :href="`https://asschem.id/${detil.lampiran}`"
             target="_blank">
             Buka Lampiran
             <v-icon right>

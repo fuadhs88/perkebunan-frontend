@@ -68,7 +68,7 @@
             <div
                 v-else-if="item.type==='file'">
                 <input 
-                    accept="image/png,image/jpg,image/jpeg"
+                    accept="image/png,image/jpg,image/jpeg,application/pdf"
                     type="file" 
                     style="display:none"
                     :id="`file-${index}`" 
