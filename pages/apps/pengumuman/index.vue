@@ -175,6 +175,11 @@ export default {
                     info: ['Masukkan judul pengumuman']
                 }, 
                 {
+                    text: 'Lampiran',
+                    value: 'lampiran',
+                    type: 'file',
+                }, 
+                {
                     text: 'Deskripsi',
                     value: 'deskripsi',
                     type: 'textarea',

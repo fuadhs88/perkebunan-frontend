@@ -4,7 +4,19 @@
             :title="detil.judul"
             :subtitle="$moment(detil.dibuat).format('DD MMM, HH:mm')"
             color="text--black"/>
-        {{detil.deskripsi}}
+        <v-btn
+            v-if="detil.lampiran!=''"
+            :href="detil.lampiran"
+            target="_blank">
+            Buka Lampiran
+            <v-icon right>
+                mdi-launch
+            </v-icon>
+        </v-btn>
+        <div class="mt-4">
+            {{detil.deskripsi}}
+        </div>
+        
 	</div>
 </template>
 <script>
