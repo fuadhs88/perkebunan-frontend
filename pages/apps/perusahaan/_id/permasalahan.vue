@@ -25,6 +25,12 @@ export default {
                             info: ['Masukkan deskripsi permasalahan'],
                         },                 
                         {
+                            text: 'Lampiran',
+                            value: 'lampiran',
+                            type: 'file',
+                            info: ['Sertakan lampiran'],
+                        },                 
+                        {
                             text: 'Aksi',
                             value: 'aksi',
                             form: false

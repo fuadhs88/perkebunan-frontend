@@ -78,6 +78,14 @@
 				</div>
 				
 			</template>
+			<template v-slot:[`item.selesai`]="{item}">
+				<v-icon small v-if="item.selesai==='belum'" color="error">
+					mdi-radiobox-blank
+				</v-icon>
+				<v-icon small v-else color="success">
+					mdi-check-all
+				</v-icon>
+			</template>
 			<template v-slot:[`item.dibuat`]="{item}">
 				{{$moment(item.dibuat).format('DD MMM, HH:mm:ss')}}
 			</template>
@@ -250,13 +258,14 @@ export default {
 		data: [],
 		perusahaan: {},
 		headers: [
+			{ text: '', value: 'selesai' },
 			{ text: 'Nama Perusahaan', value: 'nama' },
 			{ text: 'Kantor Pusat', value: 'alamat_kantor_pusat' },
 			{ text: 'Dibuat', value: 'dibuat' },
 			{ text: 'Diubah', value: 'diubah' },			
 			{ text: 'Aksi', value: 'aksi' },
 		],
-		opsiPencarian: ['Nama Perusahaan', 'NPWP', 'Nama Kebun'],
+		opsiPencarian: ['Nama Perusahaan', 'NPWP', 'Nama Kebun', 'Status Pengisian'],
 	}),
 	methods:{
 		handleKonfirmasiHapus(item){

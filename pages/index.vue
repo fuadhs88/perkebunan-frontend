@@ -49,10 +49,6 @@ export default {
     }),
 	methods:{
 		handleSubmit:function(){
-			if(window.innerWidth<=480 && this.roleDipilih=="admin"){
-				alert("Maaf, untuk admin silahkan buka versi website")
-				return false
-			}
 			this.error = null
 			this.$auth.$storage.setUniversal("loginType", this.roleDipilih)
 			return this.$auth

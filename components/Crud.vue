@@ -117,6 +117,15 @@
 					</v-icon>
 				</v-btn>
 			</template>
+			<template v-slot:[`item.lampiran`]="{item}">
+				<v-btn small :href="`https://asschem.id/${item.lampiran}`" target="_blank">
+					<v-icon small left>
+						mdi-launch
+					</v-icon>
+                    Buka
+				</v-btn>
+				
+			</template>
 		</v-data-table>
         <!-- untuk popup form dan edit -->
         <v-dialog

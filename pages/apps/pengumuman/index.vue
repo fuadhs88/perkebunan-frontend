@@ -155,8 +155,7 @@ export default {
             isFetching: false,
             dialog: {},
             data: [
-                { id: 1, title: 'SD NEGRI KEUREA', subtitle: 'Jl. Budi Jl. Raya Cilember, Sukaraja, Kec. Cicendo, Kota Bandung, Jawa Barat 40153', icon: 'mdi-school'},
-                { id: 2, title: 'SD NEGRI 1 Kujangsari', subtitle: 'Jl. Budi Jl. Raya Cilember, Sukaraja, Kec. Cicendo, Kota Bandung, Jawa Barat 40153', icon: 'mdi-school'},
+                
             ],
             jalur:[],
             jalurTerpilih: 0,

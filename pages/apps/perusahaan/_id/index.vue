@@ -47,6 +47,10 @@ export default {
 			{ title: 'Kemitraan Lainnya', icon: 'mdi-handshake-outline', to:"/kemitraanlainnya" },
 			{ title: 'CSR', icon: 'mdi-gift', to:"/csr" },
 			{ title: 'Permasalahan', icon: 'mdi-folder-alert', to:"/permasalahan" },
+			{ title: 'Galeri', icon: 'mdi-image-multiple', to:"/galeri" },
+			{ title: 'Konfirmasi Selesai', icon: 'mdi-check-all', to:"/konfirmasi" },
+			{ title: 'Cetak Laporan', icon: 'mdi-printer', to:"/cetak" },
+			{ title: 'Cetak Serah Terima', icon: 'mdi-printer-check', to:"/serahterima" },
         ],
     }),
 }
