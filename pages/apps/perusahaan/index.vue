@@ -59,13 +59,12 @@
 			:items="data"
 			item-key="name"
 			class="elevation-1 mt-6"
-			height="65vh">
+			height="65vh"
+			:search="keyword">
 			<template v-slot:top>
 				<div class="d-flex px-4 pt-4 align-center">
-					<v-select
-					:items="opsiPencarian"
-					label="Pilih Opsi Pencarian"/>
 					<v-text-field
+						v-model="keyword"
 						label="Keyword"/>
 					<v-btn class="ml-4">
 						<div class="px-12">
@@ -214,6 +213,7 @@ export default {
 		this.handleUpdateData()
 	},
 	data: ()=>({
+		keyword:'',
 		currentLocation: {},
 		circleOptions: {
 		
