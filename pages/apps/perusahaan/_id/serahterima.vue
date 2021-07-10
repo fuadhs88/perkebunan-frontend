@@ -1,14 +1,5 @@
 <template>
 	<div>
-        <div class="text-right">
-            <v-btn 
-                v-on:click="handelCetak"
-                small>
-                <v-icon left>mdi-printer-check</v-icon>
-                Cetak / Export PDF
-            </v-btn>
-            
-        </div>
         <div class="d-flex" style="height:100vh;" v-if="model.selesai!='terima'">
             <v-col class="mx-auto my-auto" sm="12" md="6" cols="12">
                 <v-card class="border--primary">
@@ -22,20 +13,34 @@
             </v-col>
         </div>
         <div v-else>
+            <div class="text-right">
+                <v-btn 
+                    v-on:click="handelCetak"
+                    small>
+                    <v-icon left>mdi-printer-check</v-icon>
+                    Cetak / Export PDF
+                </v-btn>
+                
+            </div>
             <vue-html2pdf
                 :show-layout="true"
                 :float-layout="false"
-                :enable-download="true"
+                :enable-download="false"
                 :preview-modal="true"
                 filename="print perusahaan"
                 :paginate-elements-by-height="1100"
                 :pdf-quality="2"
+                
                 pdf-format="a4"
                 pdf-orientation="portrait"
                 pdf-content-width="800px"
                 :manual-pagination="false"
                 ref="html2Pdf">
-                <section slot="pdf-content" style="font-family:Times New Roman; ">
+                <section slot="pdf-content" style="font-family:Times New Roman; padding:20px">
+                    <v-img
+                        style="position:absolute"
+                        width="80px"
+                        src="/kutai.png"/>
                     <div style="text-align:center; padding:12px;">
                         <p style="font-size:16pt; margin:0">PEMERINTAH KABUPATEN KUTAI TIMUR</p>
                         <p style="font-size:24pt; margin:0">DINAS PERKEBUNAN</p>
@@ -47,7 +52,10 @@
                     <br/>
                     <br/>
                     <p style="font-size:16pt; text-align:center">TANDA TERIMA LAPORAN</p>
+                    <br/>
+                    <br/>
                     <p style="font-size:12pt">Telah diterima Laporan Progres Pembangunan Perkebunan Melalui Sistem Informasi Pembangunan Perkebunan ( Si Bungkil) dari:</p>
+                    
                     <ol>
                         <li style="line-height: 150%; margin: 0cm 0cm 0cm 0px; font-size: 12pt; ">Nama Perusahaan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ model.nama }}</li>
                         <li style="line-height: 150%; margin: 0cm 0cm 0cm 0px; font-size: 12pt; ">Waktu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ $moment(model.diubah).format('DD MMM YYYY, HH:mm:ss') }}</li>
@@ -60,7 +68,7 @@
                         <tr>
                             <td width="50%">
                                 Barcode<br/>
-                                <img :src="`https://barcode.tec-it.com/barcode.ashx?data=nama%20perusahaan:${model.nama}&code=QRCode&translate-esc=on`"/>
+                                <vue-qrcode :value="`nama%20perusahaan:${model.nama}`" />
                             </td>
                             <td>
                                 ttd
@@ -113,9 +121,11 @@
 </template>
 <script>
 import VueHtml2pdf from 'vue-html2pdf'
+import VueQrcode from 'vue-qrcode'
 export default {
     components: {
-        VueHtml2pdf
+        VueHtml2pdf,
+        VueQrcode
     },
     props: ['id_perusahaan'],
     mounted: function(){
