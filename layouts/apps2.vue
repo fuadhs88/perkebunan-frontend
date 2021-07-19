@@ -123,30 +123,6 @@ export default {
 						"deskripsi":"Pengumuman untuk semua perusahaan",
 						"link":"/apps/pengumuman"
 					},
-					{
-						"ikon": "mdi-cash-multiple",
-						"nama":"Keuangan",
-						"deskripsi":"Sistem Pengelolaan Data Keuangan Terpadu",
-						"link":"/apps/keuangan"
-					},
-					{
-						"ikon": "mdi-account-tie",
-						"nama":"Kepegawaian",
-						"deskripsi":"Sistem Pengelolaan Data Kepegawaian Terpadu",
-						"link":"/apps/kepegawaian"
-					},
-					{
-						"ikon": "mdi-calendar-clock",
-						"nama":"Kehadiran",
-						"deskripsi":"Sistem Pengelolaan Data Kehadiran Terpadu",
-						"link":"/apps/kehadiran"
-					},
-					{
-						"ikon": "mdi-book-open-variant",
-						"nama":"LMS",
-						"deskripsi":"Learning Mangement System untuk pegawai baru",
-						"link":"/apps/lms"
-					},
 				],
 				perusahaan: [
 					{ nama: 'Pengumuman', ikon: 'mdi-bullhorn', link:"/apps/pengumuman" },
