@@ -1,9 +1,13 @@
 <template>
     <v-form ref="form">
+        <v-row>
         <!-- form -->
-        <div 
+        <v-col 
             v-for="(item, index) in fields.filter((item)=>item.form!=false)"
-            :key="index">
+            :key="index"
+            :md="item.md||12"
+            cols="12"
+            class="py-0">
             <!-- jika tipenya switct -->
             <v-switch 
                 v-if="item.type==='switch'"
@@ -111,14 +115,19 @@
                     Lihat File
                 </v-btn>
             </v-text-field>
-            
+            <!-- jika tipe nya hidden -->
+            <input
+                v-else-if="item.type==='hidden'"
+                type="hidden"
+                v-model="model[item.value]"/>
             <!-- jika tipenya text -->
             <v-text-field
                 v-else
                 :label="item.text"
                 :hint="item.info?item.info[0]:''"
                 v-model="model[item.value]"/>
-        </div>
+        </v-col>
+        </v-row>
         <!-- dialog -->
         <v-dialog
 			v-model="isSaving"

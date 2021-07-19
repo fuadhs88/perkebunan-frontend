@@ -26,10 +26,32 @@
 					</v-list-item-content>
 					</v-list-item>
 				</v-list>
-			</v-navigation-drawer>
+			</v-navigation-drawer>				
 				<v-col>
+					<v-row>
+					<v-col cols="12" md="4">
+						<v-select
+							v-model="tahunDipilih"
+							label="Tahun Dipilih"
+							:items="[2021]"/>
+					</v-col>
+					<v-col cols="12" md="8">
+						<v-chip-group
+							active-class="primary--text"
+							column
+							v-model="triwulanDipilih">
+							<v-chip
+							v-for="(item, key) in ['Triwulan 1', 'Triwulan 2',  'Triwulan 3', 'Triwulan 4']"
+							:key="key"
+							>
+							{{ item }}
+							</v-chip>
+						</v-chip-group>
+					</v-col>
+					</v-row>
 					<nuxt-child 
-						:id_perusahaan="id_perusahaan"/>
+						:id_perusahaan="id_perusahaan"
+						:triwulan="getTriwulan()"/>
 				</v-col>
 			</div>
 		</v-app>
@@ -40,7 +62,9 @@
 export default {
 	async asyncData({ params }){
 		return {
-			id_perusahaan: params.id
+			tahunDipilih: 2021,
+			id_perusahaan: params.id,
+			triwulanDipilih: 0,
 		}
 	},
 	data: () => ({
@@ -60,6 +84,9 @@ export default {
 			{ title: 'Penyelesaian HAT', icon: 'mdi-map-check-outline', to:"/penyelesaianhat" },
 			{ title: 'Pembukaan Lahan', icon: 'mdi-map-check', to:"/pembukaan" },
 			{ title: 'Penanaman Lahan', icon: 'mdi-map-clock', to:"/penanaman" },
+			{ title: 'ANKT', icon: 'mdi-format-list-checkbox', to:"/ankt" },
+			{ title: 'Lahan Gambut', icon: 'mdi-format-list-numbered', to:"/lahangambut" },
+			{ title: 'Embung', icon: 'mdi-format-list-bulleted', to:"/embung" },
 			{ title: 'Tenaga Kerja', icon: 'mdi-account-hard-hat', to:"/tenagakerja" },
 			{ title: 'Pembangunan Pabrik', icon: 'mdi-hammer-wrench', to:"/pembangunanpabrik" },
 			{ title: 'Kendali Kebakaran', icon: 'mdi-fire', to:"/kendalikebakaran" },
@@ -81,8 +108,8 @@ export default {
         right: null,
     }),
 	methods:{
-		handleSubmit:()=>{
-
+		getTriwulan: function(){
+			return `${this.tahunDipilih}${this.triwulanDipilih+1}`
 		}
 	}
 }

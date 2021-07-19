@@ -6,18 +6,30 @@
 </template>
 <script>
 export default {
-    props: ['id_perusahaan'],
+    props: ['id_perusahaan', 'triwulan'],
+    watch:{
+        triwulan: function(){
+            this.crud.apiData               = `/v1/api/data/perusahaan_penyelesaian_hat/id_perusahaan/${this.id_perusahaan}?field1=triwulan&value1=${this.triwulan}`
+            this.crud.headers[0].default    = this.triwulan
+        }
+    },
     data(){
         return {
             crud: {
                 title: "HAT",
                 subtitle: "Penyelesaian Hak Atas Tanah",
-                apiData: `/v1/api/data/perusahaan_penyelesaian_hat/id_perusahaan/${this.id_perusahaan}`,
+                apiData: `/v1/api/data/perusahaan_penyelesaian_hat/id_perusahaan/${this.id_perusahaan}?field1=triwulan&value1=${this.triwulan}`,
                 apiTambah: `/v1/api/tambah/perusahaan_penyelesaian_hat?id_perusahaan=${this.id_perusahaan}`,
                 apiUbah: `/v1/api/ubah/perusahaan_penyelesaian_hat`,
                 apiHapus: `/v1/api/hapus/perusahaan_penyelesaian_hat`,
 
                 headers: [
+                    { 
+                        value: "triwulan",
+                        default: this.triwulan,
+                        type:'hidden',
+                        table:false
+                    }, 
                     {
                         text: 'Proses',
                         value: 'proses',

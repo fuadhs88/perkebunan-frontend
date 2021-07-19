@@ -6,18 +6,30 @@
 </template>
 <script>
 export default {
-    props: ['id_perusahaan'],
+    props: ['id_perusahaan', 'triwulan'],
+    watch:{
+        triwulan: function(){
+            this.crud.apiData               = `/v1/api/data/perusahaan_kendali_kebakaran/id_perusahaan/${this.id_perusahaan}?field1=triwulan&value1=${this.triwulan}`
+            this.crud.headers[0].default    = this.triwulan
+        }
+    },
     data(){
         return {
             crud: {
                 title: "Kendali Kebakaran",
                 subtitle: "Kepemilikan Sarana Prasarana Sistem Cegah Dan Kendali Kebakaran",
-                apiData: `/v1/api/data/perusahaan_kendali_kebakaran/id_perusahaan/${this.id_perusahaan}`,
+                apiData: `/v1/api/data/perusahaan_kendali_kebakaran/id_perusahaan/${this.id_perusahaan}?field1=triwulan&value1=${this.triwulan}`,
                 apiTambah: `/v1/api/tambah/perusahaan_kendali_kebakaran?id_perusahaan=${this.id_perusahaan}`,
                 apiUbah: `/v1/api/ubah/perusahaan_kendali_kebakaran`,
                 apiHapus: `/v1/api/hapus/perusahaan_kendali_kebakaran`,
 
                 headers: [
+                    { 
+                        value: "triwulan",
+                        default: this.triwulan,
+                        type:'hidden',
+                        table:false
+                    }, 
                     {
                         text: 'Tipe',
                         value: 'tipe',

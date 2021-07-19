@@ -16,21 +16,20 @@
 			language="id"
 			:center="{lat: -0.897788, lng: 117.5383008}"
 			:options="{fullscreenControl: true}"
-			:zoom="5.27"
-			>
-				<GMapMarker
-					v-for="(location, index) in data.filter((item)=>item.lokasi_kebun_lat!='' || item.lokasi_kebun_lat!=null)"
-					:key="index"
-					:position="{lat: location.lokasi_kebun_lat, lng: location.lokasi_kebun_lng}"
-					@click="currentLocation = location">
-						<GMapInfoWindow :options="{maxWidth: 200}">
-						<code>
-							{{ location.nama }}
-						</code>
-						</GMapInfoWindow>
-				</GMapMarker>
-				<GMapCircle :options="circleOptions"/>
-			</GMap>
+			:zoom="5.27">
+			<GMapMarker
+				v-for="(location, index) in data.filter((item)=>item.lokasi_kebun_lat!='' || item.lokasi_kebun_lat!=null)"
+				:key="index"
+				:position="{lat: location.lokasi_kebun_lat, lng: location.lokasi_kebun_lng}"
+				@click="currentLocation = location">
+					<GMapInfoWindow :options="{maxWidth: 200}">
+					<code>
+						{{ location.nama }}
+					</code>
+					</GMapInfoWindow>
+			</GMapMarker>
+			<GMapCircle :options="circleOptions"/>
+		</GMap>
 		<v-row justify="center" class="mt-2">
 			<CardStats 
 				sm="12" 
@@ -279,7 +278,7 @@ export default {
 				this.isFetching	= false
 				this.alert		= {
 					show:true,
-					message:"Data perusahaan berhasil ditambahkan"
+					message:"Data perusahaan berhasil dihapus"
 				}
 				if(resp.status){
 					this.handleUpdateData()
@@ -307,6 +306,8 @@ export default {
 							nama: '',
 							email_pengelola:'',
 						}
+					console.log(this.$router)
+					this.$router.app.refresh()
 				}
 			})
 		},

@@ -118,7 +118,7 @@
 				</v-btn>
 			</template>
 			<template v-slot:[`item.lampiran`]="{item}">
-				<v-btn small :href="`https://asschem.id/${item.lampiran}`" target="_blank">
+				<v-btn v-if="item.lampiran" small :href="`https://asschem.id/${item.lampiran}`" target="_blank">
 					<v-icon small left>
 						mdi-launch
 					</v-icon>
@@ -155,7 +155,7 @@
                         <div
                             v-for="(item, index) in crud.headers.filter((item)=>item.children!=undefined)"
                             :key="index">
-                            <p class="subtitle-3 mb-0">{{item.text}}</p>
+                            <p class="subtitle-3">{{item.text}}</p>
                             <Form
                                 class="ml-6 mb-6"
                                 :fields="item.children"
@@ -200,18 +200,25 @@
 </template>
 <script>
 export default {
-    props: ["crud"],
-	data: () => ({
-        isFetching: false,
-        dialog: {},
-        model: {},
-        isFetching:false,
-		dipilih: [],
-		dialogForm: false,
-		dialogDelete: false,
-		dialogTitle: '',
-        data: [],
-    }),
+    props: ["crud", "triwulan"],
+	data: function(){
+        return {
+            isFetching: false,
+            dialog: {},
+            model: {},
+            isFetching:false,
+            dipilih: [],
+            dialogForm: false,
+            dialogDelete: false,
+            dialogTitle: '',
+            data: [],
+        }
+    },
+    watch:{
+        'crud.apiData': function(){
+            this.handleUpdateData()
+        }
+    },
     mounted(){ 
         this.handleUpdateData()
     },
@@ -240,8 +247,14 @@ export default {
 			this.dialogDelete	= false
 		},
         handleOpenFormTambah(){
+            let model   = {}
+            this.crud.headers.map((item)=>{
+                if(item.children===undefined && item.default){
+                    model[item.value]       = item.default
+                }
+            })
             this.dialogTitle    = "Tambah"
-            this.model			= {}
+            this.model			= model
             this.dialogForm     = true
         },
         handleOpenFormEdit(item){
@@ -256,7 +269,6 @@ export default {
         handleSimpan: function(){
 			this.isFetching = true
             let payload     = {}
-            
             this.crud.headers.filter((item)=>item.form!=false).map((item)=>{
                 if(item.children===undefined){
                     payload[item.value]     = this.model[item.value]!=undefined?this.model[item.value]:''

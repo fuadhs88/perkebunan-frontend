@@ -2,11 +2,12 @@
     <div>
         <p class="subtitle-2">DATA PERUSAHAAN :</p>
         <Form
+            class="ml-6 mb-6"
             :fields="fields"
             :model="model"
             :isFetching="isFetching"
             :dialog="dialog"/>
-        <p class="subtitle-3 mb-0 mt-4">Lokasi Kebun / Pabrik</p>
+        <p class="subtitle-3 mt-4">Lokasi Kebun / Pabrik</p>
         <Form
             class="ml-6 mb-6"
             :fields="fieldsLokasiKebun"

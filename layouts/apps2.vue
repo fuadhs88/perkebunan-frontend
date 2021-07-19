@@ -52,7 +52,7 @@
 				</v-list-item>
 				<v-list-item
 					color="primary"
-					to="/">
+					v-on:click="handelKeluar">
 					<v-list-item-action>
 						<v-icon>mdi-logout</v-icon>
 					</v-list-item-action>
@@ -156,6 +156,9 @@ export default {
 					{ nama: 'Penyelesaian HAT', ikon: 'mdi-map-check-outline', link:"/apps/perusahaan/1/penyelesaianhat" },
 					{ nama: 'Pembukaan Lahan', ikon: 'mdi-map-check', link:"/apps/perusahaan/1/pembukaan" },
 					{ nama: 'Penanaman Lahan', ikon: 'mdi-map-clock', link:"/apps/perusahaan/1/penanaman" },
+					{ nama: 'ANKT', ikon: 'mdi-format-list-checkbox', link:"/apps/perusahaan/1/ankt" },
+					{ nama: 'Lahan Gambut', ikon: 'mdi-format-list-numbered', link:"/apps/perusahaan/1/lahangambut" },
+					{ nama: 'Embung', ikon: 'mdi-format-list-bulleted', link:"/apps/perusahaan/1/embung" },
 					{ nama: 'Tenaga Kerja', ikon: 'mdi-account-hard-hat', link:"/apps/perusahaan/1/tenagakerja" },
 					{ nama: 'Pembangunan Pabrik', ikon: 'mdi-hammer-wrench', link:"/apps/perusahaan/1/pembangunanpabrik" },
 					{ nama: 'Kendali Kebakaran', ikon: 'mdi-fire', link:"/apps/perusahaan/1/kendalikebakaran" },
@@ -184,7 +187,10 @@ export default {
 	methods:{
 		getApps: function (){
 			return this.apps[this.tipe]
-		}
+		},
+		handelKeluar: async function(){
+            await this.$auth.logout()
+        }
 	}
 }
 </script>
