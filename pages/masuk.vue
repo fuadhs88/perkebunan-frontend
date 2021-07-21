@@ -66,7 +66,7 @@ export default {
 		const urlParams 	= new URLSearchParams(queryString)
 		const token 		= `Bearer ${urlParams.get('access_token')}`
 		const tipe			= $auth.$storage.getUniversal("loginType")
-		let perusahaan		= []
+		let perusahaan		= false
 		let perusahaanDipilih = 1
 		await $axios.$post(`v1/akun/masukGoogle`,{
 			token:token,

@@ -16,6 +16,7 @@ export default {
     data(){
         return {
             crud: {
+                nested:true,
                 title: "Lahan",
                 subtitle: "Kelola data Rencana Dan Realisasi Pembukaan Lahan",
                 apiData: `/v1/api/data/perusahaan_pembukaan_lahan/id_perusahaan/${this.id_perusahaan}?field1=triwulan&value1=${this.triwulan}`,
@@ -43,17 +44,24 @@ export default {
                         info: ['Contoh : satuan dalam HA'],
                     }, 
                     {
-                        text: 'Realisasi Inti',
-                        value: 'realisasi_inti',
-                        type: 'number',
-                        info: ['Contoh : satuan dalam HA'],
-                    }, 
-                    {
-                        text: 'Realisasi Plasma',
-                        value: 'realisasi_plasma',
-                        type: 'number',
-                        info: ['Contoh : satuan dalam HA'],
-                    }, 
+                        text: 'Realisasi',
+                        value: 'target',
+                        align: "center",
+                        children:[
+                            {
+                                text: 'Inti',
+                                value: 'realisasi_inti',
+                                type: 'number',
+                                info: ['Contoh : satuan dalam HA'],
+                            }, 
+                            {
+                                text: 'Plasma',
+                                value: 'realisasi_plasma',
+                                type: 'number',
+                                info: ['Contoh : satuan dalam HA'],
+                            }, 
+                        ]
+                    },
                     {
                         text: 'Keterangan',
                         value: 'keterangan',

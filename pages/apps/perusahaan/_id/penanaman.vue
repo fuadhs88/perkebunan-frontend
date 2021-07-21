@@ -16,6 +16,7 @@ export default {
     data(){
         return {
             crud: {
+                nested: true,
                 title: "Penanaman",
                 subtitle: "Kelola data Rencana Dan Realisasi Penanaman",
                 apiData: `/v1/api/data/perusahaan_penanaman_lahan/id_perusahaan/${this.id_perusahaan}?field1=triwulan&value1=${this.triwulan}`,
@@ -43,25 +44,41 @@ export default {
                         info: ['Contoh : satuan dalam HA'],
                     }, 
                     {
-                        text: 'Inti (TBM)',
-                        value: 'inti_tbm',
-                        type:'number',
-                    }, 
+                        text: 'INTI',
+                        value: 'target',
+                        align: "center",
+                        children:[
+                            {
+                                text: 'TBM',
+                                value: 'inti_tbm',
+                                type:'number',
+                            }, 
+                            {
+                                text: 'TM',
+                                value: 'inti_tm',
+                                type:'number',
+                            }, 
+                        ],
+                    },
                     {
-                        text: 'Inti (TM)',
-                        value: 'inti_tm',
-                        type:'number',
-                    }, 
-                    {
-                        text: 'Plasma (TBM)',
-                        value: 'plasma_tbm',
-                        type:'number',
-                    }, 
-                    {
-                        text: 'Plasma (TM)',
-                        value: 'plasma_tm',
-                        type:'number',
-                    }, 
+                        text: 'PLASMA',
+                        value: 'target',
+                        align: "center",
+                        children:[
+                            {
+                                text: 'TBM',
+                                value: 'plasma_tbm',
+                                type:'number',
+                            }, 
+                            {
+                                text: 'TM',
+                                value: 'plasma_tm',
+                                type:'number',
+                            }, 
+                        ],
+                    },
+                    
+                    
                     {
                         text: 'Keterangan',
                         value: 'keterangan',
