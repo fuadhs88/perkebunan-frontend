@@ -80,7 +80,7 @@ export default {
 				if(tipe==="admin"){
 					window.location.href='/apps/beranda'
 				}else{
-					if(resp.perusahaan.length===0){
+					if(resp.perusahaan.length===1){
 						window.location.href='/apps/beranda'
 					}else{
 						perusahaan			= resp.perusahaan

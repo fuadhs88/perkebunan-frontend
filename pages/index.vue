@@ -43,10 +43,17 @@
 <script>
 export default {
 	layout:'blank',
-	data: () => ({
-		role: ['admin', 'perusahaan'],
-		roleDipilih: window.innerWidth>480?'admin':'perusahaan',
-    }),
+	data(){
+		let user = this.$auth.user
+		if(user){
+			this.$router.push(`/apps/beranda`) 
+		}
+
+		return {
+			role: ['admin', 'perusahaan'],
+			roleDipilih: window.innerWidth>480?'admin':'perusahaan',
+		}
+    },
 	methods:{
 		handleSubmit:function(){
 			this.error = null
