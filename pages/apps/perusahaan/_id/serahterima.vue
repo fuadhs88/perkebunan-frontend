@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <div class="d-flex" style="height:100vh;" v-if="model.selesai!='terima'">
+        <div class="d-flex" style="height:100vh;" v-if="model[`triwulan${triwulan.substr(4,1)}`]!='selesai'">
             <v-col class="mx-auto my-auto" sm="12" md="6" cols="12">
                 <v-card class="border--primary">
                     <v-card-title class="pb-0">
@@ -127,7 +127,7 @@ export default {
         VueHtml2pdf,
         VueQrcode
     },
-    props: ['id_perusahaan'],
+    props: ['id_perusahaan', 'triwulan'],
     mounted: function(){
         this.handleUpdateData()
     },
@@ -148,7 +148,7 @@ export default {
             sekolahTerpilih: 0,
             model: {},
             crud: {
-                apiData: `/v1/api/detil/perusahaan/${this.id_perusahaan}`,
+                apiData: `/v1/api/detil/perusahaan_triwulan/${this.id_perusahaan}/id_perusahaan?field1=tahun&value1=${this.triwulan.substr(0,4)}`,
                 apiUbah: `/v1/api/ubah/perusahaan/${this.id_perusahaan}`,
             },
             fields: [

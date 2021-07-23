@@ -61,23 +61,60 @@
 			height="65vh"
 			:search="keyword">
 			<template v-slot:top>
-				<div class="d-flex px-4 pt-4 align-center">
-					<v-text-field
-						v-model="keyword"
-						label="Keyword"/>
-					<v-btn class="ml-4">
-						<div class="px-12">
+				<v-container>
+				<v-row dense>
+					<v-col cols="12" md="3">
+						<v-select
+							dense
+							v-model="tahunDipilih"
+							item-text="label"
+							item-value="value"
+							:items="[2021]"
+							label="Tahun Laporan"/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<v-text-field
+							dense
+							v-model="keyword"
+							label="Keyword"/>
+					</v-col>
+					<v-col cols="12" md="3">
+						<v-btn small block>
 							Cari
 							<v-icon small right>
 								mdi-account-search-outline
 							</v-icon>
-						</div>
-					</v-btn>
-				</div>
-				
+						</v-btn>
+					</v-col>
+				</v-row>
+				</v-container>
 			</template>
-			<template v-slot:[`item.selesai`]="{item}">
-				<v-icon small v-if="item.selesai==='belum'" color="error">
+			<template v-slot:[`item.triwulan1`]="{item}">
+				<v-icon small v-if="item.triwulan1===null || item.triwulan1==='belum'" color="error">
+					mdi-radiobox-blank
+				</v-icon>
+				<v-icon small v-else color="success">
+					mdi-check-all
+				</v-icon>
+			</template>
+			<template v-slot:[`item.triwulan2`]="{item}">
+				<v-icon small v-if="item.triwulan2===null || item.triwulan2==='belum'" color="error">
+					mdi-radiobox-blank
+				</v-icon>
+				<v-icon small v-else color="success">
+					mdi-check-all
+				</v-icon>
+			</template>
+			<template v-slot:[`item.triwulan3`]="{item}">
+				<v-icon small v-if="item.triwulan3===null || item.triwulan3==='belum'" color="error">
+					mdi-radiobox-blank
+				</v-icon>
+				<v-icon small v-else color="success">
+					mdi-check-all
+				</v-icon>
+			</template>
+			<template v-slot:[`item.triwulan4`]="{item}">
+				<v-icon small v-if="item.triwulan4===null || item.triwulan4==='belum'" color="error">
 					mdi-radiobox-blank
 				</v-icon>
 				<v-icon small v-else color="success">
@@ -212,6 +249,7 @@ export default {
 		this.handleUpdateData()
 	},
 	data: ()=>({
+		tahunDipilih: 2021,
 		keyword:'',
 		currentLocation: {},
 		circleOptions: {
@@ -257,11 +295,14 @@ export default {
 		data: [],
 		perusahaan: {},
 		headers: [
-			{ text: '', value: 'selesai' },
 			{ text: 'Nama Perusahaan', value: 'nama' },
 			{ text: 'Kantor Pusat', value: 'alamat_kantor_pusat' },
 			{ text: 'Dibuat', value: 'dibuat' },
 			{ text: 'Diubah', value: 'diubah' },			
+			{ text: 'Tr 1', value: 'triwulan1' },			
+			{ text: 'Tr 2', value: 'triwulan2' },			
+			{ text: 'Tr 3', value: 'triwulan3' },			
+			{ text: 'Tr 4', value: 'triwulan4' },			
 			{ text: 'Aksi', value: 'aksi' },
 		],
 		opsiPencarian: ['Nama Perusahaan', 'NPWP', 'Nama Kebun', 'Status Pengisian'],
@@ -288,7 +329,7 @@ export default {
 			this.dialogDelete	= false
 		},
 		async handleUpdateData(){
-			const data 	= (await this.$api.$get('/v1/api/data/perusahaan'))
+			const data 	= (await this.$api.$get(`/v1/api/perusahaanTriwulan/${this.tahunDipilih}`))
 			this.data	= data.data
 		},
 		handleTambahPerusahaan(){

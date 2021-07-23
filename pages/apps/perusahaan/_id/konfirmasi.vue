@@ -15,13 +15,13 @@
                     <v-spacer></v-spacer>
                     <v-btn 
                         v-on:click="handelSimpan('selesai')"
-                        :class="model.selesai!='belum'?'primary':''">
+                        :class="model[`triwulan${triwulan.substr(4,1)}`]==='selesai'?'primary':''">
                         Sudah
                         <v-icon right dark>mdi-check-all</v-icon>
                     </v-btn>
                     <v-btn 
                         v-on:click="handelSimpan('belum')"
-                        :class="model.selesai==='belum'?'primary':''">
+                        :class="model[`triwulan${triwulan.substr(4,1)}`]!='selesai' || model[triwulan.substr(4,1)]===null?'primary':''">
                         Belum
                         <v-icon right dark>mdi-radiobox-blank</v-icon>
                     </v-btn>
@@ -105,7 +105,12 @@
 </template>
 <script>
 export default {
-    props: ['id_perusahaan'],
+    props: ['id_perusahaan', 'triwulan'],
+    // watch:{
+    //     triwulan: function(){
+    //         this.crud.apiData               = `/v1/api/detil/perusahaan_triwulan/${this.id_perusahaan}/id_perusahaan?field1=tahun&value1=${this.triwulan.substr(0,4)}`
+    //     }
+    // },
     mounted: function(){
         this.handleUpdateData()
     },
@@ -126,8 +131,8 @@ export default {
             sekolahTerpilih: 0,
             model: {},
             crud: {
-                apiData: `/v1/api/detil/perusahaan/${this.id_perusahaan}`,
-                apiUbah: `/v1/api/ubah/perusahaan/${this.id_perusahaan}`,
+                apiData: `/v1/api/detil/perusahaan_triwulan/${this.id_perusahaan}/id_perusahaan?field1=tahun&value1=${this.triwulan.substr(0,4)}`,
+                apiUbah: `/v1/api/perusahaanTriwulanUpdate/${this.id_perusahaan}`,
             },
             fields: [
                 {
@@ -156,8 +161,7 @@ export default {
 			this.dialogDelete	= true
 		},
         handleUpdateData: async function (){
-            const model         = (await this.$api.$get(this.crud.apiData)).data
-            console.log(model)
+            const model         = (await this.$api.$get(this.crud.apiData)).data || {}
             this.model          = model
         },
         handelEdit: function(item){
@@ -167,10 +171,12 @@ export default {
 		handelSimpan: function(selesai){
             this.isFetching = true
             let payload     = {
-                selesai
+                tahun:this.triwulan.substr(0,4),
+                triwulan:`triwulan${this.triwulan.substr(4,1)}`,
+                status: selesai
             }
 
-            const api = `${this.crud.apiUbah}/${this.model.id}`
+            const api = `${this.crud.apiUbah}`
 			this.$api.$post(api, payload).then(async (resp)=>{
                 this.isFetching = false
                 this.modal      = true;
