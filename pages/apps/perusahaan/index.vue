@@ -30,7 +30,81 @@
 			</GMapMarker>
 			<GMapCircle :options="circleOptions"/>
 		</GMap>
-		<v-row justify="center" class="mt-2">
+		<v-card class="mt-2">
+			<v-simple-table dense class="mt-2">
+			<template v-slot:default>
+			<thead>
+				<tr>
+					<th>Total Perusahaan: <b>{{ dataDasbor.total_perusahaan }}</b></th>
+					<th width="100px">TR 1</th>
+					<th width="100px">TR 2</th>
+					<th width="100px">TR 3</th>
+					<th width="100px">TR 4</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Luas Lokasi</td>
+					<td>{{ dataDasbor.lokasi.triwulan1 }}</td>
+					<td>{{ dataDasbor.lokasi.triwulan2 }}</td>
+					<td>{{ dataDasbor.lokasi.triwulan3 }}</td>
+					<td>{{ dataDasbor.lokasi.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>Luas IUP/PPUB</td>
+					<td>{{ dataDasbor.ppub.triwulan1 }}</td>
+					<td>{{ dataDasbor.ppub.triwulan2 }}</td>
+					<td>{{ dataDasbor.ppub.triwulan3 }}</td>
+					<td>{{ dataDasbor.ppub.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>Luas IPL</td>
+					<td>{{ dataDasbor.ipl.triwulan1 }}</td>
+					<td>{{ dataDasbor.ipl.triwulan2 }}</td>
+					<td>{{ dataDasbor.ipl.triwulan3 }}</td>
+					<td>{{ dataDasbor.ipl.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>Jumlah Koperasi</td>
+					<td>{{ dataDasbor.koperasi.triwulan1 }}</td>
+					<td>{{ dataDasbor.koperasi.triwulan2 }}</td>
+					<td>{{ dataDasbor.koperasi.triwulan3 }}</td>
+					<td>{{ dataDasbor.koperasi.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>TM Kemitraan</td>
+					<td>{{ dataDasbor.koperasi_tm.triwulan1 }}</td>
+					<td>{{ dataDasbor.koperasi_tm.triwulan2 }}</td>
+					<td>{{ dataDasbor.koperasi_tm.triwulan3 }}</td>
+					<td>{{ dataDasbor.koperasi_tm.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>TBM Kemitraan</td>
+					<td>{{ dataDasbor.koperasi_tbm.triwulan1 }}</td>
+					<td>{{ dataDasbor.koperasi_tbm.triwulan2 }}</td>
+					<td>{{ dataDasbor.koperasi_tbm.triwulan3 }}</td>
+					<td>{{ dataDasbor.koperasi_tbm.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>TBS INTI / ton</td>
+					<td>{{ dataDasbor.inti_tbs.triwulan1 }}</td>
+					<td>{{ dataDasbor.inti_tbs.triwulan2 }}</td>
+					<td>{{ dataDasbor.inti_tbs.triwulan3 }}</td>
+					<td>{{ dataDasbor.inti_tbs.triwulan4 }}</td>
+				</tr>
+				<tr>
+					<td>TBS PLASMA / ton</td>
+					<td>{{ dataDasbor.plasma_tbs.triwulan1 }}</td>
+					<td>{{ dataDasbor.plasma_tbs.triwulan2 }}</td>
+					<td>{{ dataDasbor.plasma_tbs.triwulan3 }}</td>
+					<td>{{ dataDasbor.plasma_tbs.triwulan4 }}</td>
+				</tr>
+			</tbody>
+			</template>
+		</v-simple-table>
+		</v-card>
+		
+		<!-- <v-row justify="center" class="mt-2">
 			<CardStats 
 				sm="12" 
 				md="3"
@@ -44,14 +118,14 @@
 			<CardStats 
 				sm="12" 
 				md="3"
-				title="Total Luas PPUB"
+				title="Total Luas IUP/PPUB"
 				:value="dataDasbor.luas_ppub||0"/>
 			<CardStats 
 				sm="12" 
 				md="3"
 				title="Total. IPL" 
 				:value="dataDasbor.luas_ipl||0"/>
-		</v-row>
+		</v-row> -->
 		<v-data-table
 			dense
 			:headers="headers"
@@ -244,6 +318,11 @@
 </template>
 <script>
 export default {
+	watch: {
+		tahunDipilih: function(){
+			this.handleUpdateDataDasbor()
+		}
+	},
 	mounted: function(){
 		this.handleUpdateDataDasbor()
 		this.handleUpdateData()
@@ -280,7 +359,17 @@ export default {
 		],
 
 
-		dataDasbor: {},
+		dataDasbor: {
+			lokasi: {},
+			ppub: {},
+			ipl: {},
+			koperasi: {},
+			koperasi_tm: {},
+			koperasi_tbm: {},
+			pabrik: {},
+			inti_tbs: {},
+			plasma_tbs: {},
+		},
 		isFetching:false,
 		dialogForm:false,
 		formData:{
@@ -329,8 +418,9 @@ export default {
 			this.dialogDelete	= false
 		},
 		async handleUpdateData(){
-			const data 	= (await this.$api.$get(`/v1/api/perusahaanTriwulan/${this.tahunDipilih}`))
-			this.data	= data.data
+			const data 			= (await this.$api.$get(`/v1/api/perusahaanTriwulan/${this.tahunDipilih}`))
+			this.data			= data.data
+
 		},
 		handleTambahPerusahaan(){
 			this.isFetching		= true
@@ -353,7 +443,7 @@ export default {
 			})
 		},
 		async handleUpdateDataDasbor(){
-			const data 		= (await this.$api.$get('/v1/api/dasborPerusahaan'))
+			const data 		= (await this.$api.$get(`/v1/api/dasborPerusahaan/${this.tahunDipilih}`))
 			this.dataDasbor	= data.data
 		},
 	}

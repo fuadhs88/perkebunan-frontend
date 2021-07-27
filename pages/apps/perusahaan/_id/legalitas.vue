@@ -28,7 +28,7 @@
             :fields="fieldsLokasiPerpanjangan3"
             :model="model"/>
 
-        <p class="subtitle-3">e. PPUB/ IUP</p>
+        <p class="subtitle-3">e. IUP/PPUB</p>
         <Form
             class="ml-6 mb-6"
             :fields="fieldsPPUB"

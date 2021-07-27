@@ -78,7 +78,7 @@ export default {
 				$auth.$storage.setUniversal("authToken", resp.data)
 				$auth.$storage.setUniversal("_token.google", token)
 				if(tipe==="admin"){
-					window.location.href='/apps/beranda'
+					window.location.href='/apps/perusahaan'
 				}else{
 					if(resp.perusahaan.length===1){
 						window.location.href='/apps/beranda'

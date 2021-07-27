@@ -57,7 +57,7 @@
                     <p style="font-size:12pt">Telah diterima Laporan Progres Pembangunan Perkebunan Melalui Sistem Informasi Pembangunan Perkebunan ( Si Bungkil) dari:</p>
                     
                     <ol>
-                        <li style="line-height: 150%; margin: 0cm 0cm 0cm 0px; font-size: 12pt; ">Nama Perusahaan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ model.nama }}</li>
+                        <li style="line-height: 150%; margin: 0cm 0cm 0cm 0px; font-size: 12pt; ">Nama Perusahaan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ perusahaan.nama }}</li>
                         <li style="line-height: 150%; margin: 0cm 0cm 0cm 0px; font-size: 12pt; ">Waktu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ $moment(model.diubah).format('DD MMM YYYY, HH:mm:ss') }}</li>
                     </ol>
                     <br/>
@@ -68,7 +68,7 @@
                         <tr>
                             <td width="50%">
                                 Barcode<br/>
-                                <vue-qrcode :value="`nama%20perusahaan:${model.nama}`" />
+                                <vue-qrcode :value="`nama%20perusahaan:${perusahaan.nama}`" />
                             </td>
                             <td>
                                 ttd
@@ -147,8 +147,10 @@ export default {
             jalurTerpilih: 0,
             sekolahTerpilih: 0,
             model: {},
+            perusahaan: {},
             crud: {
                 apiData: `/v1/api/detil/perusahaan_triwulan/${this.id_perusahaan}/id_perusahaan?field1=tahun&value1=${this.triwulan.substr(0,4)}`,
+                apiDataPerusahaan: `/v1/api/detil/perusahaan/${this.id_perusahaan}`,
                 apiUbah: `/v1/api/ubah/perusahaan/${this.id_perusahaan}`,
             },
             fields: [
@@ -182,8 +184,9 @@ export default {
 		},
         handleUpdateData: async function (){
             const model         = (await this.$api.$get(this.crud.apiData)).data
-            console.log(model)
+            const perusahaan    = (await this.$api.$get(this.crud.apiDataPerusahaan)).data
             this.model          = model
+            this.perusahaan     = perusahaan
         },
         handelEdit: function(item){
             this.model      = Object.assign({}, item)

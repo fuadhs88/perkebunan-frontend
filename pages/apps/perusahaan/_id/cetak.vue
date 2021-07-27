@@ -80,7 +80,7 @@
                                                 'lokasi_perpanjangan3_nomor', 
                                                 'lokasi_perpanjangan3_tanggal', 
                                                 'lokasi_perpanjangan3_luas')"/> 
-                <div v-html="templateIjinLokasi('e. PPUB/ IUP', 
+                <div v-html="templateIjinLokasi('e. IUP/ PPUB', 
                                                 'ppub_nomor', 
                                                 'ppub_tanggal', 
                                                 'ppub_luas')"/> 
