@@ -30,6 +30,7 @@
 			</GMapMarker>
 			<GMapCircle :options="circleOptions"/>
 		</GMap>
+		<h2 class="overline mt-4">Statistik</h2>
 		<v-card class="mt-2">
 			<v-simple-table dense class="mt-2">
 			<template v-slot:default>
@@ -103,7 +104,7 @@
 			</template>
 		</v-simple-table>
 		</v-card>
-		
+		<h2 class="overline mt-4">Data Perusahaan</h2>
 		<!-- <v-row justify="center" class="mt-2">
 			<CardStats 
 				sm="12" 
