@@ -63,8 +63,9 @@
                 <p>
                     <strong>LEGALITAS YANG DIPEROLEH</strong>
                 </p>
-                <p>1. SuratPersetujuan/Perijinan yang diperoleh :</p>
-                <div v-html="templateIjinLokasi('a. Ijin Lokasi', 
+                <p>1. Surat Persetujuan/Perijinan yang diperoleh :</p>
+                <div v-if="this.legalitas.lokasi_nomor!=undefined">
+                    <div v-html="templateIjinLokasi('a. Ijin Lokasi', 
                                                 'lokasi_nomor', 
                                                 'lokasi_tanggal', 
                                                 'lokasi_luas')"/> 
@@ -123,6 +124,10 @@
                 <div v-html="templateIjinLokasi('p. SK CPP', 
                                                 'sk_cpp_nomor', 
                                                 'sk_cpp_tanggal')"/> 
+                </div>
+                <div v-else>
+                    data triwulan ini belum dirubah
+                </div>
                 <div class="html2pdf__page-break"/>
                 <br/>
                 <p>
@@ -1225,7 +1230,7 @@ export default {
             if(luas){
                 templateLuas    = `<tr>
                         <td>Luas </td>
-                        <td>: ${this.legalitas[luas]} ha</td>
+                        <td>: ${this.legalitas[luas] || '-'} ha</td>
                     </tr>`
             }
             return `
@@ -1234,11 +1239,11 @@ export default {
                 <tbody>
                     <tr>
                         <td width="147">Nomor </td>
-                        <td>: ${this.legalitas[nomor]} </td>
+                        <td>: ${this.legalitas[nomor] || '-'} </td>
                     </tr>
                     <tr>
                         <td>Tanggal </td>
-                        <td>: ${this.legalitas[tanggal]} </td>
+                        <td>: ${this.legalitas[tanggal] || '-'} </td>
                     </tr>
                     ${templateLuas}
                 </tbody>
