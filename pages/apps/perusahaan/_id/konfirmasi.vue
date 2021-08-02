@@ -30,7 +30,7 @@
             <v-card 
                 v-else
                 class="border--primary">
-                <div v-if="model.selesai==='selesai' || model.selesai==='terima'">
+                <div v-if="model[`triwulan${triwulan.substr(4,1)}`]==='selesai' || model[`triwulan${triwulan.substr(4,1)}`]==='terima'">
                     <v-card-title class="pb-0">
                         Konfirmasi
                     </v-card-title>
@@ -41,13 +41,13 @@
                         <v-spacer></v-spacer>
                         <v-btn 
                             v-on:click="handelSimpan('terima')"
-                            :class="model.selesai==='terima'?'primary':''">
+                            :class="model[`triwulan${triwulan.substr(4,1)}`]==='terima'?'primary':''">
                             Terbitkan
                             <v-icon right dark>mdi-check-all</v-icon>
                         </v-btn>
                         <v-btn 
                             v-on:click="handelSimpan('selesai')"
-                            :class="model.selesai==='selesai'?'primary':''">
+                            :class="model[`triwulan${triwulan.substr(4,1)}`]==='selesai'?'primary':''">
                             Belum
                             <v-icon right dark>mdi-radiobox-blank</v-icon>
                         </v-btn>

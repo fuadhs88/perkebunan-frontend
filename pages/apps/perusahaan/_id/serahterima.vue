@@ -1,6 +1,7 @@
 <template>
 	<div>
-        <div class="d-flex" style="height:100vh;" v-if="model[`triwulan${triwulan.substr(4,1)}`]!='selesai'">
+        {{model[`triwulan${triwulan.substr(4,1)}`]}}
+        <div class="d-flex" style="height:100vh;" v-if="model[`triwulan${triwulan.substr(4,1)}`]!='terima'">
             <v-col class="mx-auto my-auto" sm="12" md="6" cols="12">
                 <v-card class="border--primary">
                     <v-card-title class="pb-0">
