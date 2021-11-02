@@ -50,7 +50,7 @@ export default {
 		'@nuxtjs/auth-next',
 		'@nuxtjs/moment',
 		['nuxt-gmaps', {
-			key: 'AIzaSyA9UiS35-dxdQDy7_inlsRXW_SJrnVMqs8',
+			key: 'AIzaSyCH1PsrqWitXuGFA2U9NlYx1cMMULMulUE',
 			//you can use libraries: ['places']
 		}]
 	],
